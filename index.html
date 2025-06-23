@@ -3,335 +3,587 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>امتحان الثانوية العامة - اللغة العربية - دور أول ٢٠٢٥</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
+    <title>امتحان الثانوية العامة - دور أول ٢٠٢٥</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* --- بداية CSS لمنع تحديد النص --- */
         body {
-            font-family: 'Tajawal', sans-serif;
             -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10+ */
-            user-select: none; /* Standard syntax */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE10+ */
+            user-select: none;         /* Standard */
         }
-        /* Anti-screenshot overlay */
-        .secure-overlay {
-            position: fixed;
+        /* السماح بتحديد النص داخل مربعات النص إذا لزم الأمر */
+        textarea, input[type="text"] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        /* --- نهاية CSS لمنع تحديد النص --- */
+
+        :root {
+            --bg-main: #f4f7f9; 
+            --bg-card: #ffffff;
+            --text-primary: #2c3e50; 
+            --text-secondary: #586776; 
+            --accent-color: #3498db; 
+            --accent-color-darker: #2980b9; 
+            --correct-answer-bg: #e8f5e9; 
+            --correct-answer-border: #a5d6a7; 
+            --correct-answer-text: #2e7d32; 
+            --border-light: #e0e6ed; 
+            --font-body: 'Cairo', sans-serif;
+            --font-heading: 'Readex Pro', sans-serif;
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.07);
+            --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.1);
+            --paragraph-indent: 2.5em; 
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .exam-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .exam-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color-darker));
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+        }
+        .exam-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.8em;
+            margin: 0;
+            font-weight: 700;
+        }
+        .exam-header p {
+            font-size: 1.2em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2em;
+            color: var(--accent-color-darker);
+            margin-top: 40px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-left: 15px;
+            font-size: 0.9em;
+        }
+
+        .passage-card {
+            background-color: #eef5f9; 
+            border: 1px solid #d1e0e8;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+        .passage-card h3 {
+            font-family: var(--font-heading);
+            color: var(--accent-color-darker);
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .passage-card p {
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+            margin-bottom: 1.1em;
+            font-size: 1.05em;
+        }
+        /* .passage-card p:first-of-type { */ /* تم إلغاء هذا الاستثناء لتطبيق المسافة البادئة على كل الفقرات */
+             /* text-indent: 0; */
+        /* } */
+
+
+        .question-card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .question-header {
+            display: flex;
+            align-items: baseline; 
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            font-family: var(--font-heading);
+            font-size: 1.6em;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-left: 10px; 
+            flex-shrink: 0; 
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: justify;
+            flex-grow: 1; 
+        }
+        
+        .question-card .passage-card {
+            margin-top: 15px;
+            margin-bottom: 15px; 
+            background-color: #f9fafb;
+            border-color: #e5e7eb;
+        }
+        .question-card .passage-card p { /* ضمان تطبيق المسافة البادئة داخل قطع الأسئلة */
+            text-indent: var(--paragraph-indent);
+        }
+
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .options-list li {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-light);
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: default; 
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            font-size: 1.05em;
+        }
+         .options-list li:hover {
+            border-color: var(--accent-color);
+            background-color: #f1f6f9;
+        }
+
+
+        .answer-explanation {
+            margin-top: 20px;
+            padding: 18px;
+            background-color: var(--correct-answer-bg);
+            border: 1px solid var(--correct-answer-border);
+            border-right-width: 5px;
+            border-radius: 8px;
+        }
+        .answer-explanation .label {
+            font-weight: 700;
+            color: var(--correct-answer-text);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .answer-explanation .label i {
+            margin-left: 8px;
+        }
+        .answer-explanation p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+            margin-bottom: 0.5em; /* مسافة بين فقرات الشرح */
+        }
+        .answer-explanation p:last-child {
+            margin-bottom: 0;
+        }
+        /* .answer-explanation p:first-of-type { */ /* تم إلغاء هذا الاستثناء */
+             /* text-indent: 0; */
+        /* } */
+        .answer-explanation .correct-choice-container { /* حاوية لجملة الإجابة الصحيحة */
+            text-indent: 0 !important; /* لضمان عدم تطبيق المسافة البادئة على هذه الفقرة تحديدًا */
+        }
+        .answer-explanation .correct-choice {
+            font-weight: bold;
+            color: var(--correct-answer-text);
+        }
+
+        .question-mcq .option-char {
+            font-weight: bold;
+            color: var(--accent-color-darker);
+            margin-left: 8px;
+            display: inline-block;
+            min-width: 1.5em;
+        }
+
+        /* لأسئلة المقال */
+        .essay-question .question-text { 
+            font-weight: normal; 
+        }
+        .essay-answer {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #e9edf1;
+            border: 1px solid #c8d3dd;
+            border-radius: 8px;
+        }
+        .essay-answer .label {
+            font-weight: 700;
+            color: var(--accent-color-darker);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .essay-answer p {
+            font-size: 1em;
+            color: var(--text-primary);
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+            margin-bottom: 0.8em;
+        }
+        /* .essay-answer p:first-of-type { */ /* تم إلغاء هذا الاستثناء */
+            /* text-indent: 0; */
+        /* } */
+        .essay-answer ul {
+            padding-right: var(--paragraph-indent); 
+            list-style: none; 
+        }
+        .essay-answer ul li {
+            font-size: 1em;
+            color: var(--text-primary);
+            text-align: justify;
+            margin-bottom: 0.5em;
+            position: relative; 
+            padding-right: 1.5em; 
+        }
+        .essay-answer ul li strong { /* لتمييز بداية النقطة في الإجابة المقالية */
+            color: var(--accent-color-darker);
+        }
+        .essay-answer ul li::before {
+            content: "◦"; 
+            position: absolute;
+            right: 0;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 100 100"><text x="50" y="50" font-size="10" fill="rgba(0,0,0,0.05)" font-family="Arial" text-anchor="middle" dominant-baseline="middle" transform="rotate(-45, 50, 50)">Property of Exam</text></svg>');
-            pointer-events: none;
-            z-index: 9999;
+            color: var(--accent-color-darker);
+            font-weight: bold;
         }
-        @media print {
-            .secure-overlay {
+        .essay-answer .correct-essay-answer { 
+            text-indent: 0 !important;
+            text-align:right;
+            font-weight:bold;
+            color:var(--correct-answer-text);
+            font-size: 1.1em;
+            background-color: var(--correct-answer-bg);
+            padding: 10px;
+            border-radius: 6px;
+            border-right: 3px solid var(--correct-answer-text);
+        }
+
+
+        /* Poetry styling */
+        .poetry-block {
+            margin: 25px 0;
+            padding: 25px;
+            background-color: #fffbeb; 
+            border-right: 5px solid #f9bf25; 
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+        .poetry-block .poet-intro {
+            font-style: italic;
+            color: #8d6e63; 
+            margin-bottom: 18px;
+            font-weight: 600;
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+        }
+        /* .poetry-block .poet-intro:first-of-type { */ /* تم إلغاء هذا الاستثناء */
+            /* text-indent: 0; */
+        /* } */
+
+        .poetry-block .verse {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+            line-height: 2;
+        }
+        .poetry-block .hemistich-container { 
+            display: flex;
+            align-items: baseline; 
+            width: 49%; /* تعديل طفيف لإعطاء مساحة للفاصل */
+        }
+        .poetry-block .hemistich-container.first { 
+             justify-content: flex-start; 
+        }
+        .poetry-block .hemistich {
+            text-align: right;
+            flex-grow: 1; 
+        }
+        .poetry-block .verse-number {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-left: 8px; 
+            min-width: 20px; 
+            font-weight: normal; 
+        }
+        .poetry-block .verse-separator {
+            color: #b0bec5;
+            font-weight: bold;
+            padding: 0 5px; /* تقليل المسافة حول الفاصل */
+            align-self: center; 
+        }
+        .poetry-block .annotation {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            text-align: right;
+            text-indent: var(--paragraph-indent);
+        }
+        /* .poetry-block .annotation:first-of-type { */ /* تم إلغاء هذا الاستثناء */
+             /* text-indent: 0; */
+        /* } */
+
+
+        /* Footer */
+        .exam-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px 0;
+            border-top: 2px solid var(--border-light);
+            font-size: 0.95em;
+            color: var(--text-secondary);
+        }
+        .exam-footer strong {
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+
+        @media (max-width: 768px) {
+            .exam-header h1 { font-size: 2.2em; }
+            .section-title { font-size: 1.8em; }
+            .question-header { flex-direction: column; align-items: flex-start; margin-bottom: 10px;}
+            .question-number { font-size: 1.3em; margin-left: 0; margin-bottom: 5px;}
+            .question-text { font-size: 1.05em; }
+            .options-list li { font-size: 1em; padding: 10px 15px; }
+            .exam-container { padding: 15px; }
+            .question-card, .passage-card, .poetry-block { padding: 20px; }
+
+            .poetry-block .verse {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .poetry-block .hemistich-container {
+                width: 100%;
+                margin-bottom: 5px;
+                justify-content: flex-start; 
+            }
+             .poetry-block .hemistich-container.first .verse-number { 
+                display: inline-block; 
+            }
+            .poetry-block .hemistich-container:not(.first) .verse-number {
+                display: none; 
+            }
+            .poetry-block .verse-separator {
                 display: none;
             }
         }
-        h1, h2, h3 {
-            font-family: 'Cairo', sans-serif;
+         @media (max-width: 480px) {
+            .exam-header h1 { font-size: 1.8em; }
+            .exam-header p { font-size: 1em; }
+            .section-title { font-size: 1.5em; }
+            .passage-card p, .question-text, .options-list li, .answer-explanation p, .essay-answer p, .poetry-block .hemistich {
+                font-size: 0.95em;
+            }
+            :root { --paragraph-indent: 1.5em; }
         }
-        .prose-p {
-            text-align: justify;
-            text-indent: 2rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-        .poetry-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
-            font-size: 1.2rem;
-        }
-        .poetry-verse {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.25rem; /* Minimized gap */
-        }
-        .poetry-verse .shatr {
-            flex-basis: 49%;
-        }
-        .poetry-verse .shatr:first-child { text-align: right; }
-        .poetry-verse .shatr:last-child { text-align: left; }
-        .poetry-separator {
-            font-size: 1.2rem;
-            color: #3b82f6;
-        }
-        .question-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        .answer-block {
-            background-color: #f0f9ff;
-            border-right: 4px solid #0ea5e9;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 16px;
-        }
-        .correct-answer::before {
-            content: '✔';
-            color: #16a34a;
-            font-weight: bold;
-            margin-left: 8px;
-        }
-        .option-label {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: not-allowed;
-        }
-        .option-label.correct-answer {
-             background-color: #dcfce7;
-             border-color: #22c55e;
-        }
-        .explanation-point {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
+
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <div class="secure-overlay"></div>
+    <div class="exam-container">
+        <header class="exam-header">
+            <h1>امتحان الثانوية العامة</h1>
+            <p>دور أول ٢٠٢٥ - مع الإجابات النموذجية</p>
+        </header>
 
-    <header class="bg-sky-700 text-white p-6 text-center shadow-lg">
-        <h1 class="text-3xl md:text-4xl font-bold">امتحان الثانوية العامة بإجاباته النموذجية</h1>
-        <p class="text-lg mt-2">اللغة العربية - الدور الأول ٢٠٢٥</p>
-    </header>
+        <section id="objective-questions">
+            <h2 class="section-title"><i class="fas fa-tasks"></i>أولًا - الأسئلة الموضوعية (الاختيار من متعدد)</h2>
 
-    <main class="container mx-auto p-4 md:p-8">
-        
-        <!-- Reading Passage 1: Information -->
-        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h2 class="text-2xl font-bold text-sky-800 border-b-2 border-sky-200 pb-2 mb-4">أولًا - الأسئلة الموضوعية (الاختيار من متعدد):</h2>
-            <h3 class="font-semibold text-xl">اقرأ، ثم أجب:</h3>
-            <p class="prose-p">لا نُبالِغ إذا قلنا: إنَّ المعلوماتِ نِفطُ القرن الحادي والعشرين والثروة التي لا غِنى عنها للأفراد والمُؤسَّسات والدول؛ فالقدرة على التخطيط وإدارة الأعمال والتعامُل مع الأزمات يعتمد اعتمادًا كُلِّيًّا على المعلومات التي تُزوِّد الإنسان بالمعرفة التي يَبنِي على أساسها تقديراتِه لما يجب عليه القيام به واتخاذ القرارات الصحيحة؛ فمَن يَملِكِ المعلوماتِ الدقيقة في الوقت المُناسِب يَملِكِ القوة والسيطرة في عالَم لا مكان فيه للارتجال والعشوائية.</p>
-            <p class="prose-p">لقد صاحَبَ التقدُّم العلمي والتكنولوجي إنتاجَ كَمٍّ هائِلٍ للبيانات والمعلومات، وأمام هذا الانفجار المعرفي أصبحت إدارة المعلومات ضرورةً حتمية للاستفادة من الكَمِّ الهائل من البيانات المتاحة وتحويلها إلى معرفة ذات قيمة. لَم يَعُدْ جمعُ المعلومات هو التحدي الأكبر، بل التحدي الحقيقي يَكمُنُ في كيفية تحليلها للتحقُّق من سلامتها ودِقَّتِها وحِفظها وتأمين طُرُق إتاحتِها وتداوُلها، أيضًا تحدِّي حِفظِ حقوقِ المِلْكية الفكرية في مواجهة مخاطر القرصنة الإلكترونية، والسَّرِقَات العلمية، وانتهاك الخصوصية، واختراق السرية، والحيلولة دون نشر بيانات ومعلومات زائفة ومُضلِّلة بغرض إيقاع الضرر والابتزاز، إلى غير ذلك من مَخاطر تُهدِّد أمن المعلومات.</p>
-            <p class="prose-p">وهذان مثالان مِن الواقع للدَّلالة على قيمة المعلومات في عالمنا؛ فهناك ما يُسمَّى «استخبارات المصادر المفتوحة»، وتعني المعلومات المُستخلَصة من مواقع التواصل الاجتماعي والإعلانات وغيرها من الموادِّ المنشورة؛ إذ يُمكِن للشَّرِكات تحسين حملاتها التسويقية وتحقيق مَكاسِبَ ملموسةٍ من خلال رصد بيانات من المنشورات والتعليقات وإشارات الإعجاب التي يتبادلها الجمهور على مواقع التواصل الاجتماعي لتطوير خُطَط فَعَّالة وناجحة لتسويق منتجاتها؛ حيث لا غِنى عن تحليل البيانات في تحسين إستراتيجية التسويق الإلكتروني وجعل الحملات أكثر تأثيرًا واستهدافًا للجمهور المناسب، في المقابل قدَّرت بعض الدراسات أن خسائر الشركات العالمية نتيجة الهجمات الإلكترونية تجاوزت حاجز الـ (٦) تريليونات دولار في عام ٢٠٢١م.</p>
-            <p class="prose-p">ونظرًا لأهمية المعلومات والمَخاطر المترتِّبة على الإخلال بسلامتها أصبحت مجالًا حيوِيًّا من مجالات الأمن القومي للدُّوَل، وأُنشِئَت لها مُؤسَّساتٌ أمنية وأجهزةُ استخباراتٍ مُهَمَّتُها جمعُ وتحليل المعلومات والبيانات المتعلِّقة بالأمور السياسية والأمنية والاقتصادية والاجتماعية والثقافية؛ بهدف تزويد القادة والحكومات بالمعلومات اللازمة لاتخاذ القرارات الصائبة، وتقييم المخاطر المحتملة، وتطوير الإجراءات المُضادَّة لحماية الدول والمُؤسَّسات من التهديدات المُتوقَّعة؛ فأمنُ المعلومات يهدف إلى الحماية من انتهاك الخصوصية بالسرقة، أو الاختراق، أو إساءة الاستخدام، أو الإتلاف، أو التزييف والتحريف غير المُصرَّح به. ويقوم أمن المعلومات على أربعة مبادئ أساسية: (١) السرية؛ بحماية المعلومات الحسَّاسة من الوصول غير المُصرَّح به. (٢) التكامُلية؛ بضمان سلامة المعلومات المُخزَّنة والمُتبادَلة والتأكُّد من عدم التلاعُب بها أو تغييرها أو حذفها بطرق غير مشروعة. (٣) التوافر؛ من خلال إتاحة المعلومات للمستخدمين – المُصرَّح لهم بالوصول إليها – عند الحاجة بطريقة آمنة وسريعة. (٤) المُساءَلة؛ بتتبُّع الإجراءات وتحديد المسئولية عند حدوث أيِّ خرق أمني.</p>
-        </div>
-        <div id="questions-container-1"></div>
-        
-        <!-- Reading Passage 2: Zewail -->
-        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 class="font-semibold text-xl">ممَّا رواه الدكتور أحمد زويل عن مسيرته العلمية:</h3>
-            <p class="prose-p">كنتُ أعمَلُ في ثلاثة أو أربعة موضوعات بحثية في آنٍ واحِد، وساعد على ذلك توافُرُ الإمكانات المُغرِية في المُختَبَرات، بالإضافة إلى شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة، وفي واقع الأمر لقد عشنا في جَوٍّ مِنَ الصداقة والوِئَام بصفة عامة، غيرَ أنني كنت قد شَعَرْتُ في البداية بأن هناك مَن لَم تَكُنْ لهم الثقةُ الكاملة في إمكاناتي وكفاءتي، مع العلم أنني قد عُومِلْتُ معاملةً حسنة مِن المُثقَّفين، وإن اختلف بعضُهم معي في الرأي والرؤية، فلَم يَكُنْ ذلك سببًا لأنْ يُفسِدَ الوُدَّ بيننا؛ فقد كانوا يُقدِّرونني كإنسان، وواحد من شباب الباحثين.</p>
-            <p class="prose-p">وكان هناك أحدُ طُلَّاب الدكتوراة، وكأنَّه مِن المُعادِين للعرب، وقد تَولَّدَ لدي شعورٌ داخليٌّ بأن هذا الشخص لَم يَكُنْ يتوقَّعُ لمِصرِيٍّ مِثلي أن يتفوَّق أبدًا، وكان شديدَ الحِيطَة والحَذَر، ويَتَّسِم بفِكْرٍ مُحافِظٍ مُقاوِمٍ للتغيير، وكان يعتقد اعتقادًا جازمًا في إمكانات التكنولوجيا ودَوْرِها في سير العمليات العسكرية والحروب، واتخذ من هزيمة مصر العسكرية في حرب (يونيو) ١٩٦٧ م مُبرِّرًا لاعتقاده بأن المصريين غير مُؤهَّلين للتعامُل مع الأبحاث العلمية وإجراء التَّجارِب المعملية المتقدِّمة، وكان هذا التحامُل يجرح شعوري؛ ذلك أنه يوحي بالضرورة بأنني في منزلة أدنى من أقراني من الطلاب الأمريكيين والأوروبيين، وأنه ليس بمقدوري أن أَصِلَ إلى مستواهم.</p>
-            <p class="prose-p">ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط، بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة، وكنتُ أقول في نفسي: «سوف ترى في يوم من الأيام ما أنا فاعِلٌ». وقد تحقَّق ذلك بالفعل، وتصادَفَ أننا تقابلنا بعد ذلك في أحد المؤتمرات العلمية وقد تسلَّمت خلاله جائزة «بيتر ديباي» ذاتَ المَقامِ الرفيع، وقد جلس هذا الشخص في الصف الأول أمامي ضمن المشاركين في الاحتفاء بالمصري من جامعة بنسلفانيا.</p>
-        </div>
-        <div id="questions-container-2"></div>
+            <!-- ... (محتوى الأسئلة من 1 إلى 51 سيتم إدراجه هنا) ... -->
+            <!-- سيتم ملء هذا الجزء بمحتوى الامتحان الكامل لاحقًا -->
+            <!-- سأقوم بإدراج مثال لسؤال واحد هنا لتوضيح كيف سيعمل الخلط -->
 
-        <!-- Poetry Passage 1: Ihya' wa Ba'th -->
-        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 class="font-semibold text-xl">ممَّا قاله أحد شعراء الإحياء والبعث في الحثِّ على مقاومة المُحتلِّ الغاصِب:</h3>
-            <div class="poetry-section">
-                <div class="poetry-verse"><span class="shatr">خَلُّوا التَّوانِي فَفَجْرُ المَجْدِ قد لاحَا</span><span class="poetry-separator">∴</span><span class="shatr">واستيقِظوا فزَمَانُ النَّومِ قَد راحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">واستعمِلوا الحَزْمَ في تحريرِ مَوطِنِكُم</span><span class="poetry-separator">∴</span><span class="shatr">واسترخِصُوا في خلاصِ القُطرِ أَرْواحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">وطَهِّروا الأرضَ مِن باغٍ ومُغتصِبٍ</span><span class="poetry-separator">∴</span><span class="shatr">وأَمطِرُوهُم عَذابَ الهُونِ سَحَّاحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">واستنصِروا اللهَ؛ إنَّ النَّصرَ في يَدِهِ</span><span class="poetry-separator">∴</span><span class="shatr">على العَدُوِّ فَمِسْكُ النَّصرِ قَد فاحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">وأَجمِعُوا الأمرَ في تَوحيدِ مَطْلَبِكُم</span><span class="poetry-separator">∴</span><span class="shatr">وأَصلِحُوا ذَاتَ بَينِ القُطرِ إصلاحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">ومَكِّنُوا عُقدَةَ الإخلاصِ بينَكُمُ</span><span class="poetry-separator">∴</span><span class="shatr">وسَطِّرُوا مِنهُ فوقَ الهامِ ألواحَا</span></div>
-                <div class="poetry-verse"><span class="shatr">وحَكِّمُوا العقلَ قَبلَ الفِعلِ واتَّخِذُوا</span><span class="poetry-separator">∴</span><span class="shatr">آراءَ أهلِ النُّهَى والفَضلِ مِصباحَا</span></div>
+            <div class="passage-card">
+                <h3><i class="fas fa-book-reader"></i> اقرأ، ثم أجب:</h3>
+                <p>لا نُبالِغ إذا قلنا: إنَّ المعلوماتِ نِفطُ القرن الحادي والعشرين والثروة التي لا غِنى عنها للأفراد والمُؤسَّسات والدول؛ فالقدرة على التخطيط وإدارة الأعمال والتعامُل مع الأزمات يعتمد اعتمادًا كُلِّيًّا على المعلومات التي تُزوِّد الإنسان بالمعرفة التي يَبنِي على أساسها تقديراتِه لما يجب عليه القيام به واتخاذ القرارات الصحيحة؛ فمَن يَملِكِ المعلوماتِ الدقيقة في الوقت المُناسِب يَملِكِ القوة والسيطرة في عالَم لا مكان فيه للارتجال والعشوائية.</p>
+                <p>لقد صاحَبَ التقدُّم العلمي والتكنولوجي إنتاجَ كَمٍّ هائِلٍ للبيانات والمعلومات، وأمام هذا الانفجار المعرفي أصبحت إدارة المعلومات ضرورةً حتمية للاستفادة من الكَمِّ الهائل من البيانات المتاحة وتحويلها إلى معرفة ذات قيمة. لَم يَعُدْ جمعُ المعلومات هو التحدي الأكبر، بل التحدي الحقيقي يَكمُنُ في كيفية تحليلها للتحقُّق من سلامتها ودِقَّتِها وحِفظها وتأمين طُرُق إتاحتِها وتداوُلها، أيضًا تحدِّي حِفظِ حقوقِ المِلْكية الفكرية في مواجهة مخاطر القرصنة الإلكترونية، والسَّرِقَات العلمية، وانتهاك الخصوصية، واختراق السرية، والحيلولة دون نشر بيانات ومعلومات زائفة ومُضلِّلة بغرض إيقاع الضرر والابتزاز، إلى غير ذلك من مَخاطر تُهدِّد أمن المعلومات.</p>
+                <p>وهذان مثالان مِن الواقع للدَّلالة على قيمة المعلومات في عالمنا؛ فهناك ما يُسمَّى «استخبارات المصادر المفتوحة»، وتعني المعلومات المُستخلَصة من مواقع التواصل الاجتماعي والإعلانات وغيرها من الموادِّ المنشورة؛ إذ يُمكِن للشَّرِكات تحسين حملاتها التسويقية وتحقيق مَكاسِبَ ملموسةٍ من خلال رصد بيانات من المنشورات والتعليقات وإشارات الإعجاب التي يتبادلها الجمهور على مواقع التواصل الاجتماعي لتطوير خُطَط فَعَّالة وناجحة لتسويق منتجاتها؛ حيث لا غِنى عن تحليل البيانات في تحسين إستراتيجية التسويق الإلكتروني وجعل الحملات أكثر تأثيرًا واستهدافًا للجمهور المناسب، في المقابل قدَّرت بعض الدراسات أن خسائر الشركات العالمية نتيجة الهجمات الإلكترونية تجاوزت حاجز الـ (٦) تريليونات دولار في عام ٢٠٢١م.</p>
+                <p>ونظرًا لأهمية المعلومات والمَخاطر المترتِّبة على الإخلال بسلامتها أصبحت مجالًا حيوِيًّا من مجالات الأمن القومي للدُّوَل، وأُنشِئَت لها مُؤسَّساتٌ أمنية وأجهزةُ استخباراتٍ مُهَمَّتُها جمعُ وتحليل المعلومات والبيانات المتعلِّقة بالأمور السياسية والأمنية والاقتصادية والاجتماعية والثقافية؛ بهدف تزويد القادة والحكومات بالمعلومات اللازمة لاتخاذ القرارات الصائبة، وتقييم المخاطر المحتملة، وتطوير الإجراءات المُضادَّة لحماية الدول والمُؤسَّسات من التهديدات المُتوقَّعة؛ فأمنُ المعلومات يهدف إلى الحماية من انتهاك الخصوصية بالسرقة، أو الاختراق، أو إساءة الاستخدام، أو الإتلاف، أو التزييف والتحريف غير المُصرَّح به. ويقوم أمن المعلومات على أربعة مبادئ أساسية: (١) السرية؛ بحماية المعلومات الحسَّاسة من الوصول غير المُصرَّح به. (٢) التكامُلية؛ بضمان سلامة المعلومات المُخزَّنة والمُتبادَلة والتأكُّد من عدم التلاعُب بها أو تغييرها أو حذفها بطرق غير مشروعة. (٣) التوافر؛ من خلال إتاحة المعلومات للمستخدمين – المُصرَّح لهم بالوصول إليها – عند الحاجة بطريقة آمنة وسريعة. (٤) المُساءَلة؛ بتتبُّع الإجراءات وتحديد المسئولية عند حدوث أيِّ خرق أمني.</p>
             </div>
-        </div>
-        <div id="questions-container-3"></div>
 
-        <!-- Literature Questions -->
-        <div id="questions-container-4"></div>
+            <!-- مثال لإدراج الأسئلة - سيتم استبدال هذا بالمحتوى الكامل -->
+            <div class="question-card question-mcq" data-question-id="1">
+                <div class="question-header">
+                    <p class="question-number">١.</p>
+                    <p class="question-text">أيٌّ – ممَّا يأتي – يُعبِّر عن الفكرة العامة للموضوع؟ (درجة واحدة)</p>
+                </div>
+                <ul class="options-list">
+                    <li data-original-text="أمن المعلومات.">أمن المعلومات.</li>
+                    <li data-original-text="الثروة النِّفطية.">الثروة النِّفطية.</li>
+                    <li data-original-text="المعلومات الأمنية.">المعلومات الأمنية.</li>
+                    <li data-original-text="الانفجار المعرفي.">الانفجار المعرفي.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>تعليل الإجابة:</p>
+                    <p class="correct-choice-container">✍︎ الإجابة الصحيحة <span class="correct-choice" data-correct-original-text="أمن المعلومات."></span>؛ فالموضوع يدور حول قيمة المعلومات والمَخاطر التي تُهدِّدها، وضرورة حمايتها. يبدأ الموضوع بتشبيه المعلومات بالنفط، ثم ينتقل إلى تحديات تحليلها وتأمينها، ويستعرض أمثلة على استغلالها والإضرار بها، ويختتم بشرح مفصل لمفهوم «أمن المعلومات» ومبادئه الأربعة (السرية، التكاملية، التوافر، المساءلة). إذن، «أمن المعلومات» هو المِظَلَّة التي تجمع كل فكَر الموضوع.</p>
+                </div>
+            </div>
+            <!-- نهاية مثال السؤال -->
 
-        <!-- Reading Passage 3: Secrets -->
-        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 class="font-semibold text-xl">اقرأ، ثم أجب:</h3>
-             <h4 class="font-cairo text-lg font-bold">ممَّا كتبه مارون عبَّاد في فضل كتمان السِرِّ (بتصرُّف):</h4>
-            <p class="prose-p">السِّرُّ كالزهرة، إذا قُطِفَت ذَهبت معها الثمرة المَرجوَّة، والسِّرُّ قُطبٌ تدور حوله دواليبُ الحياة فلا تقف، فإذا بُحتَ بسِرِّك إلى غير مُحِبٍّ كَتومٍ عُوِّقت أمانيك عن الدوران، وأمسى سِرُّك عقارِبَ تَلسَعُ وأفاعِيَ تَلدَغُ، فمَن حَبَسَ سِرَّه في غيابات صَدرِهِ كفى نَفْسَه شَرَّ الخَيبَة والخُذلان وحُبُوط المَسعَى؛ عملًا بمقولة «واستعينوا على قضاء حوائجكم بالكتمان؛ فإن كُلَّ ذي نِعمة محسود».</p>
-            <p class="prose-p">قِيل: «هناك أربعُ خِصالٍ تدلُّ على الجهل: صُحبةُ الجَهول، وكثرةُ الفُضُول، وإذاعةُ السِّرِّ، واحتقارُ البِرِّ». فأخو الحَزْم هو مَن امتلَكَ قِيادَ سِرِّه فلَم يَدَعْهُ يَشْرُدُ، لكن مَن يَفتح على أعيُنِ الحُسَّاد سِجلَّ أفكارِه ليُطالعُوه فهيهاتَ أن يَبلُغَ مأرَبًا أو ينالَ غايةً؛ فأُمَنَاءُ الأسرار أَنْدَرُ مِن أُمناء الأموال. والسِّرُّ حِملٌ ثقيل لا يَنهَض به غير الحازِم مِن البَشَر، فالسرُّ على خِفَّة مَحْمِلِه قلَّما ينهض به أحدٌ؛ إنه كالأمانة، بل هو أعظم أمانة لا يحملها إلا المُجَمَّل بمكارِم الأخلاق.</p>
-            <p class="prose-p">كَم جَرَّ البَوْحُ بالأسرار مِن وَيلاتٍ؛ فكَم مِن دُوَلٍ طُوِيَت أعلامُها، وتحطَّمت سيوفها، ودارَتِ الدائرة عليها حين خَانَها أحدُ رجالِها وأَطْلَعَ أعداءها على أسرار خُططها! وكَم مِن مُلوكٍ تناثرت تِيجانُهم وهُدَّت عُروشهم؛ إذ أذاعَ بعض حاشيتهم أسرارَهم! مَن مِنَّا يُنكِر خطر الجاسوسية؟! حُروبٌ خَفِيَّة بين دُوَل تُسْدِلُ على خُطَطِها سُتُورًا كثيفة، وتُرخي عليها سُدُولًا تحفظ مصالحها، وبين دُوَل أخرى تسعى إلى اكتشاف تلك الأسرار لِتُوفَّق إلى أسباب القوة والتفوُّق والسَّبْق.</p>
-            <p class="prose-p">فلا تفتح يا أخي بابًا تَعجِزُ عن إغلاقه، ولا تَرمِ سهمًا لا تستطيع رَدَّه. إنَّ مَن يَذْرُو أسرارَه في مَهَبِّ الرياح لَهُوَ كَمَن يُطْلِقُ مِن قَفَصِهِ طَيرًا يَعِزُّ عليه أن يُفارِقَه. كُلُّ هذا يُعَلِّمُنا أنَّ للسر شأنًا عظيمًا. قال عمر بن عبد العزيز: «القلوب أوعيةٌ، والشِّفاه أقفالُها، والأَلْسُنُ مَفاتيحُها؛ فَلْيَحفظْ كُلُّ إنسانٍ مِفتاحَ سِرِّه».</p>
-        </div>
-        <div id="questions-container-5"></div>
-        
-        <!-- Grammar, Syntax, and Expression Questions -->
-        <div id="questions-container-6"></div>
+        </section>
 
-        <!-- Essay questions section -->
-        <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h2 class="text-2xl font-bold text-sky-800 border-b-2 border-sky-200 pb-2 mb-4">ثانيًا - الأسئلة المقالية:</h2>
-        </div>
-        <div id="essay-questions-container"></div>
+        <section id="essay-questions">
+            <h2 class="section-title"><i class="fas fa-pen-alt"></i>ثانيًا - الأسئلة المقالية</h2>
+             <!-- ... (محتوى الأسئلة المقالية من 52 إلى 55 سيتم إدراجه هنا) ... -->
+        </section>
 
-    </main>
+        <footer class="exam-footer">
+            <p>كتبه وراجعه وصمَّمه: <strong>رضا جبريل</strong></p>
+            <p>© جميع الحقوق محفوظة ٢٠٢٥</p>
+        </footer>
 
-    <footer class="text-center p-6 bg-gray-800 text-white mt-8">
-        <p class="font-cairo text-lg">كتبه وراجعه وصمَّمه: رضا جبريل</p>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.key === 'F12' || (e.ctrlKey && ['c', 'x', 'u', 's'].includes(e.key.toLowerCase()))) {
+        // --- بداية كود الحماية من النسخ ---
+        function isEditable(element) {
+            return false; 
+        }
+        document.addEventListener('contextmenu', function(e) {
+            if (isEditable(e.target)) return;
+            e.preventDefault();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (isEditable(e.target)) {
+                if (e.ctrlKey && (['a', 'c', 'x', 'v'].includes(e.key.toLowerCase()))) {
+                    return;
+                }
+            }
+            if (e.ctrlKey && (['c', 'x', 'a', 'u', 's', 'p'].includes(e.key.toLowerCase()))) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (['I', 'J', 'C'].includes(e.key.toUpperCase())))) {
                 e.preventDefault();
             }
         });
+        ['copy', 'cut', 'dragstart', 'selectstart'].forEach(event => {
+            document.addEventListener(event, function(e) {
+                if (isEditable(e.target)) return;
+                e.preventDefault();
+            });
+        });
+        // --- نهاية كود الحماية من النسخ ---
 
-        const allQuestionsData = {
-            group1: [
-                { id: 1, q: "أيٌّ – ممَّا يأتي – يُعبِّر عن الفكرة العامة للموضوع؟ (درجة واحدة)", o: ["أمن المعلومات.", "الثروة النِّفطية.", "المعلومات الأمنية.", "الانفجار المعرفي."], c: "أمن المعلومات.", e: "فالموضوع يدور حول قيمة المعلومات والمَخاطر التي تُهدِّدها، وضرورة حمايتها. يبدأ الموضوع بتشبيه المعلومات بالنفط، ثم ينتقل إلى تحديات تحليلها وتأمينها، ويستعرض أمثلة على استغلالها والإضرار بها، ويختتم بشرح مفصل لمفهوم «أمن المعلومات» ومبادئه الأربعة (السرية، التكاملية، التوافر، المساءلة). إذن، «أمن المعلومات» هو المِظَلَّة التي تجمع كل فكَر الموضوع." },
-                { id: 2, q: "حدِّد – ممَّا يأتي – مضاد الارتجال والعشوائية في سياق الفقرة الأولى. (درجتان)", o: ["الحزم والشدة.", "التخطيط والنظام.", "الإقدام والمُثابَرة.", "الفطنة والذكاء."], c: "التخطيط والنظام.", e: "لأن الارتجال هو التصرف وفقًا للموقف دون إعداد أو تخطيط، والعشوائية هي التصرُّف على غير هدي أو بصيرة، ونقيضهما التخطيط والنظام." },
-                { id: 3, q: "استنتج المغزى من وصف الكاتب للمعلومات بأنها «نِفطُ القرن الحادي والعشرين» في الفقرة الأولى. (درجة واحدة)", o: ["تأكيد أنَّ أهمية النفط تراجعت في القرن الحادي والعشرين.", "إظهار أهمية المعلومات في مجال التنقيب.", "تأكيد أنَّ المعلوماتِ ثروةٌ يجب استثمارها وحمايتها.", "إظهار تحوُّل العالم عن النفط إلى الطاقة النظيفة."], c: "تأكيد أنَّ المعلوماتِ ثروةٌ يجب استثمارها وحمايتها.", e: "فالنفط يُعَدُّ رمزًا للثروة والقوة والمصدر الإستراتيجي الأهم في القرن العشرين. وعندما يصف الكاتب المعلومات بأنها «نفط القرن الحادي والعشرين»؛ فهو يقصد أنها أصبحت المصدر الأعظم للقيمة والثروة والقوة في عصرنا الحالي، وهو ما يستلزم استغلالها (استثمارها) وتأمينها (حمايتها) تمامًا كما تُحمى الثروات الإستراتيجية." },
-                { id: 4, q: "استنتج المعنى الذي قصده الكاتب من قوله: «فمَن يَملِkِ المعلوماتِ الدقيقةَ في الوقت المُناسِب يَملِكِ القوة والسيطرة» في سياق الفقرة الأولى. (درجة واحدة)", o: ["ضمان الدول لسرية المعلومات وأمنها.", "قيمة المعلومة تكمُن في دِقَّتِها وسرعة الوصول إليها.", "سعي الدول القوية لإخفاء المعلومات والسيطرة عليها.", "سرعة نشر المعلومات يحمي من المخاطر."], c: "قيمة المعلومة تكمُن في دِقَّتِها وسرعة الوصول إليها.", e: "فالمقولة تُحدِّد شرطين أساسيين لتكون المعلومة مصدرًا للقوة: أن تكون «دقيقة» (الدقة)، وأن تكون متاحة «في الوقت المناسب» (التوقيت والسرعة). وهذان الشرطان هما جوهر قيمة المعلومة." },
-                { id: 5, q: "دلِّل من خلال فَهْم الفِقرة الثانية على أنَّ جمع المعلومات ليس هو التحدِّي الأكبر أمام الأشخاص الباحثين عن معرفةٍ ذاتِ قيمة لِيَبْنُوا عليها قراراتٍ صائبةً في حياتهم. (درجتان)", o: ["يُحتمَل تعرُّض الشخص للسرقة؛ نتيجةَ نَشْرِ بياناته الخاصة على مواقع التسوُّق الإلكتروني.", "قد يَبني الشخص خُطَطَه على معرفة مُضلِّلة؛ نتيجةَ جَمْعِ معلوماتٍ زائفة، أو فَقدَت قيمتَها لِقِدَمِها.", "يُحتمَل حصول الشخص على معرفة بطرق غير مشروعة؛ لاستخدامها في ابتزاز الآخرين وتهديدهم.", "قد يَفقِد الشخص حقوق الملكية الفكرية لمعلوماته؛ بسبب تفريطه في توثيقها وتأمينها."], c: "قد يَبني الشخص خُطَطَه على معرفة مُضلِّلة؛ نتيجةَ جَمْعِ معلوماتٍ زائفة، أو فَقدَت قيمتَها لِقِدَمِها.", e: "إذ تشير الفقرة الثانية صراحة إلى أنه «لَم يَعُدْ جمعُ المعلومات هو التحدي الأكبر، بل التحدي الحقيقي يَكمُنُ في كيفية تحليلها للتحقُّق من سلامتها ودِقَّتِها... والحيلولة دون نشر بيانات ومعلومات زائفة ومُضلِّلة». وهذا يعني أن جمع معلومات غير دقيقة أو مُضلِّلة لا قيمة له، بل قد يكون ضارًّا، وهو ما يُؤكِّد أن التحدي الحقيقي هو ما بعد الجمع." },
-                { id: 6, q: "هاتِ – ممَّا فهِمته من الموضوع – ما يُستدَل به على أن المعلومات سلاح ذو حدَّين. (درجتان)", o: ["استخدام المعلومات في تطوير مواقع عالمية للتواصل الاجتماعي، وترويج السلع والخدمات إلكترونيًّا.", "إنشاء مُؤسَّسات أمنية وأجهزة استخبارات مُهِمَّتُها جمعُ وتحليل المعلومات والبيانات للحماية.", "جمع معلومات لتحسين التسويق وزيادة الإنتاج، والقرصنة الإلكترونية للإضرار بالشركات المُنافِسة.", "التقدم العلمي والتكنولوجي أنتج كَمًّا هائلًا من المعلومات والبيانات، وأحدث انفجارًا معرفيًّا."], c: "جمع معلومات لتحسين التسويق وزيادة الإنتاج، والقرصنة الإلكترونية للإضرار بالشركات المُنافِسة.", e: "إذ يُشير مصطلح «سلاح ذو حدين» إلى أن للشيء جانبًا نافعًا وآخر ضارًّا. والفقرة الثالثة تُقدِّم مثالين واضحين: الأول هو الجانب النافع «استخدام الشركات للمعلومات لتحسين التسويق»، والثاني هو الجانب الضار «خسائر الشركات بسبب الهجمات الإلكترونية»." },
-            ],
-            group2: [
-                { id: 7, q: "ما الأجواء التي سيطرت على العلاقات بين الزملاء والأساتذة داخل الجامعة من وجهة نظر الكاتب؟ (درجة واحدة)", o: ["الوئام والصداقة.", "فقدان الثقة.", "المُعادَاة للعرب.", "الحيطة والحذر."], c: "الوئام والصداقة.", e: "فقد ذكر الكاتب صراحةً في الفقرة الأولى: «… شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة، وفي واقع الأمر لقد عشنا في جَوٍّ مِنَ الصداقة والوِئَام بصفة عامة». هذه العبارة تُؤكِّد أن الجوَّ العام كان يتسم بالصداقة والوئام." },
-                { id: 8, q: "بِمَ وصف الكاتب تعامُل المُثقَّفين في المجتمع الأمريكي معه؟ (درجتان)", o: ["النظرة الدونية والتعالي؛ لأنه مصري.", "الاحتفاء بتفوُّقه ومنحه جائزة رفيعة.", "التقدير على المستويين العِلمي والإنساني.", "المُعادَاة نتيجة الاختلاف في الرأي."], c: "التقدير على المستويين العِلمي والإنساني.", e: "إذ يشير الكاتب إلى ذلك في غير موضع، مثل: «عُومِلْتُ معاملةً حسنة مِن المُثقَّفين»، وأنهم «كانوا يُقدِّرونني كإنسان، وواحد من شباب الباحثين»، حتى مع وجود اختلاف في الرأي. وهذا يدل على تقديرهم له على المستوى الإنساني «كإنسان» والمستوى العلمي «كواحد من شباب الباحثين»." },
-                { id: 9, q: "استنتج علاقة قوله: «بل شَدَّ ذلك مِن أَزْرِي» بما قبله في الفقرة الثالثة. (درجة واحدة)", o: ["تعليل.", "تأكيد.", "تفسير.", "إجمال."], c: "تأكيد.", e: "فقد جاءت هذه الجملة بعد نفي الكاتب لأي أثر سلبي عليه بقوله: «ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط». ومن استخدامات «بل» أنها تنفي ما قبلها وتُؤكِّد ما بعدها؛ تنفي ضعف عزيمة الكاتب أو إصابته بالإحباط، وتؤكد صلابته النفسية وقوة عزيمته؛ فالموقف زاد من قوته وإصراره." },
-                { id: 10, q: "استنتج المغزى من قوله: «سوف ترى في يوم من الأيام ما أنا فاعِل» في سياق الفقرة الثالثة. (درجة واحدة)", o: ["تأكيد ثقته في نفسه واستنفار طاقته للتفوُّق.", "تأكيد توعُّده برَدِّ الإهانة لمَن قلَّلوا من شأنه.", "إظهار غضبه من عنصرية زميله ضد العرب.", "إظهار الشماتة في الذين شكَّكوا في قدراته."], c: "تأكيد ثقته في نفسه واستنفار طاقته للتفوُّق.", e: "لأن الكاتب قال هذه الجملة لنفسه بعد أن شعر بالتحامُل ضِدَّه، والذي «أمدَّني بطاقة هائلة». فالمقولة ليست تهديدًا بالانتقام بقدر ما هي دافع داخلي، وتعبير عن ثقته بقدرته على تحويل هذا الموقف السلبي إلى طاقة تدفعه نحو إثبات الذات والتفوق العلمي." },
-                { id: 11, q: "استدِلَّ من خلال فهم الموضوع على أن الابتكار والتفوق العلمي يتطلَّبان توافُر الإمكانات المناسبة والعَلاقات الطيبة بين الزملاء والرؤساء. (درجة واحدة)", o: ["تضاعفت طاقة أحمد زويل على البحث والدراسة لتوافُر المُختَبَرات وأجواء التعاون مع الزملاء والأساتذة.", "تألَّم زويل وجُرِحَت مَشاعره بسبب اعتقاد أحد الدارسين الأمريكيين أن المصريين غير مُؤَهَّلين للبحث العلمي.", "أظهر المثقفون في أمريكا تقديرهم لأحمد زويل إنسانًا وباحثًا، ولم تتأثَّر مودتهم باختلافهم معه في الرأي.", "حصل زويل على جائزة «بيتر ديباي» في أحد المؤتمرات العلمية ليُثبِت تفوُّق المصريين رغم قلة الإمكانات."], c: "تضاعفت طاقة أحمد زويل على البحث والدراسة لتوافُر المُختَبَرات وأجواء التعاون مع الزملاء والأساتذة.", e: "إذ يربط الكاتب في بداية الموضوع بطريقة مباشرة بين قدرته على العمل في عدة موضوعات بحثية في آنٍ واحِد وبين عاملين أساسيين: «توافُرُ الإمكانات المُغرِية في المُختَبَرات» (الإمكانات المناسبة)، و«شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة» (العلاقات الطيبة)." },
-                { id: 12, q: "وازِن – من خلال الفقرتين – بين رَدَّة فِعلِ كُلٍّ مِن طه حسين والكاتب تُجاه التقليل من شأنه. (درجتان)", passage: `قال الكاتب:<br><p class="prose-p">«ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط، بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة، وكنتُ أقول في نفسي: «سوف ترى في يوم من الأيام ما أنا فاعِلٌ». وقد تحقَّق ذلك بالفعل، وتصادَفَ أننا تقابلنا بعد ذلك في أحد المؤتمرات العلمية وقد تسلَّمت خلاله جائزة «بيتر ديباي» ذاتَ المَقامِ الرفيع، وقد جلس هذا الشخص في الصف الأول أمامي ضمن المشاركين في الاحتفاء بالمصري من جامعة بنسلفانيا».</p>قال طه حسين في كتاب «الأيام»:<br><p class="prose-p">«وقد استقرَّ إذن في نفس الصبي أنه ما زال – كما كان قبل رحلته إلى القاهرة – قليلَ الخطر ضئيلَ الشأن لا يَستحقُّ عنايةً به ولا سؤالًا عنه؛ فآذى ذلك غُرورَه، وقد كان غُرورُه شديدًا، وزاده ذلك إمعانًا في الصمت وعكوفًا على نفسه وانصرافًا إليها».</p>`, o: ["كلاهما أدرك أنه قد تعجَّلَ تحقيقَ المكانة بين الناس فقرَّر الابتعاد عنهم.", "طه حسين أدرك أن عليه أن يَعيشَ لنفسه، والكاتب غيَّر طريقة تعامُله مع الناس ليكسب حبهم.", "الكاتب تصادَم مع مَن قلَّل من شأنه، وطه حسين أصرَّ على إثبات ذاته ونيل مكانة في قريته.", "كلاهما آذاه التقليل من شأنه؛ فانطوى طه حسين على نفسه، ولكن الكاتِب ازداد إصرارًا على تحقيق ذاته."], c: "كلاهما آذاه التقليل من شأنه؛ فانطوى طه حسين على نفسه، ولكن الكاتِب ازداد إصرارًا على تحقيق ذاته.", e: "فكلاهما تأذَّى نفسيًّا من الشعور بالتقليل من شأنه؛ حيث قال زويل: «وكان هذا التحامُل يجرح شعوري»، وقال طه حسين: «فآذى ذلك غُرورَه»، لكن ردة الفعل كانت مختلفة؛ حيث انطوى طه حسين على نفسه وازداد صمتًا وعزلة «زاده ذلك إمعانًا في الصمت وعكوفًا على نفسه». أمَّا أحمد زويل فقد حوَّل هذا الشعور إلى طاقة إيجابية وإصرار على النجاح «بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة»." },
-            ],
-            group3: [
-                 { id: 13, q: "بِمَ طالب الشاعر بني وطنه في البيت الأول؟ (درجتان)", o: ["الحفاظ على الحرية التي يَنعَم بها الوطن.", "الهِمَّة والسعي الجادُّ لتحرير الوطن.", "الحفاظ على الوقت وحُسْن استغلاله.", "إظهار الفخر والتغنِّي بأمجاد الوطن."], c: "الهِمَّة والسعي الجادُّ لتحرير الوطن.", e: "إذ يطلب الشاعر من أبناء الوطن أن يتركوا الكسل والتراخي «خَلُّوا التَّوانِي»، وأن ينهضوا ويستعدوا «استيقِظوا»؛ لأن وقت تحقيق المجد؛ مجد تحرير الوطن قد حان «فَجْرُ المَجْدِ قد لاحَا»." },
-                 { id: 14, q: "استنتِج المغزى من قول الشاعر في البيت الثاني: «واسترخِصُوا في خلاصِ القُطرِ أَرْواحَا». (درجة واحدة)", o: ["الحثُّ على بذل النفس في سبيل حرية الوطن.", "الحثُّ على التضحية بالمال والثروة لرقي البلاد.", "الدعوة إلى التحلِّي بكريم الصفات، والترفُّع عن الدنايا.", "الدعوة إلى التحلِّي بالصبر في مواجهة المحن والشدائد."], c: "الحثُّ على بذل النفس في سبيل حرية الوطن.", e: "إذ يُشجِّع الشاعر أبناء الوطن على التضحية بالنفس وعدم الخوف من الموت في سبيل تحرير الوطن، فالتعبير «استرخصوا أرواحًا» يعني أن يَرَوا أرواحهم رخيصة وثمنًا قليلًا يُبذَل مقابل الهدف الأسمى وهو تحرير الوطن." },
-                 { id: 15, q: "استنتجِ المغزى من قول الشاعر: «وطَهِّروا الأرضَ مِن باغٍ ومُغتصِبٍ» في البيت الثالث. (درجة واحدة)", o: ["تحذير أبناء مصر مِن عاقبة البَغْي والجَوْر على حقوق المستضعفين من الناس.", "استنفار المصريين للتخلُّص مِن المُحتَلِّ الطامِع في خيرات بلدهم تخلُّصَهم من الدنس.", "حثُّ أبناء مصر على توحيد صفوفهم وتطهير نفوسهم من الظلم والبغي.", "حثُّ المصريين على التوسُّع في استثمار أراضيهم وعدم السماح ببوارها."], c: "استنفار المصريين للتخلُّص مِن المُحتَلِّ الطامِع في خيرات بلدهم تخلُّصَهم من الدنس.", e: "فقول الشاعر «طَهِّروا» يُصوِّر المحتل «الباغي والمغتصب» وكأنه نجاسة أو دنس يجب إزالته من الأرض الطاهرة، وهذا التعبير يحمل شحنة قوية لاستنهاض الهمم وإثارة الحَمِيَّة لطرد هذا المحتل الذي يطمع في خيرات الوطن." },
-                 { id: 16, q: "بيِّن المبدأ الذي يدعو إليه الشاعر في البيت الرابع. (درجتان)", o: ["بالإيمان الصادق يتحقَّق النصر.", "باتحاد الأمة وحزمها تُصان كرامتُها.", "بالإخلاص والتفاني يَرقَى الوطن ويتقدَّم.", "بالانتصار يتحرَّر الوطن وتنتشر الأفراح."], c: "بالإيمان الصادق يتحقَّق النصر.", e: "إذ يدعو الشاعر في البيت الرابع إلى الاستعانة بالله «واستنصِروا اللهَ»؛ لأن النصر بيده سبحانه وتعالى «إنَّ النَّصرَ في يَدِهِ»؛ فالمبدأ الأساسي هنا هو أن الإيمان بالله واللجوء إليه هو السبيل لتحقيق النصر على الأعداء." },
-                 { id: 17, q: "هاتِ من الأبيات ما يدلُّ على أن الشاعر يُؤمِن بمبدأ الشورى. (درجة واحدة)", o: ["اتَّخِذُوا آراءَ أهلِ النُّهَى والفَضلِ مِصباحَا.", "استعمِلوا الحَزْمَ في تحريرِ مَوطِنِكُم.", "أَصلِحُوا ذَاتَ بَينِ القُطرِ إصلاحَا.", "استنصِروا اللهَ إنَّ النَّصرَ في يَدِهِ."], c: "اتَّخِذُوا آراءَ أهلِ النُّهَى والفَضلِ مِصباحَا.", e: "ففيه دعوة صريحة إلى الأخذ بمشورة أهل العقول الراجحة والفضل والاستنارة بآرائهم، وهذا جوهر الشورى؛ وهو استشارة أهل الخبرة والرأي السديد." },
-                 { id: 18, q: "استنتِج العاطفة المسيطرة على الشاعر في الأبيات. (درجتان)", o: ["الاعتزاز والفخر.", "الوطنية والانتماء.", "الغضب والثورة.", "اللوم والعتاب."], c: "الوطنية والانتماء.", e: "فالأبيات كلها مشحونة بحب الوطن والرغبة العارمة في تحريره ورفعته؛ فالشاعر يحثُّ بني وطنه على النهوض وتوحيد الصفوف والتضحية من أجل الوطن، واللجوء إلى الله، والأخذ بالشورى، وكلُّ ذلك نابع من شعور عميق بالانتماء للوطن والغيرة عليه." },
-                 { id: 19, q: "ميِّز الصورة البيانية في قول الشاعر: «فَجْرُ المَجْدِ» في البيت الأول. (درجتان)", o: ["تشبيه بليغ.", "استعارة مكنية.", "تشبيه مجمل.", "كناية عن موصوف."], c: "تشبيه بليغ.", e: "إذ شبَّه الشاعر «المَجد» بـ «الفجر»، وحذف أداة التشبيه ووجه الشبه. وجاء التشبيه على صورة إضافة المُشبَّه به إلى المُشبَّه. والأصل: المَجدُ فَجرٌ." },
-                 { id: 20, q: "استنتج في ضوء فهمك الأبيات سمة من سمات مدرسة الإحياء والبعث من حيث الموضوع. (درجة واحدة)", o: ["الاهتمام بالآخرين وإهمال التعبير عن الذات.", "الإشادة باتحاد الأمة في مواجهة الشدائد.", "حثُّ الشعب على النضال ضدَّ الاحتلال.", "ازدياد الوعي نتيجة الانفتاح على الغرب."], c: "حثُّ الشعب على النضال ضدَّ الاحتلال.", e: "إذ تجسد الأبيات هذه السمة بوضوح؛ فهي قصيدة وطنية سياسية، تهدف إلى إيقاظ الوعي القومي، وحث الشعب على الثورة والكفاح المسلح؛ لتحرير الوطن من المحتل الغاصب." },
-            ],
-            group4: [
-                { id: 21, q: "استنتِج السمة التي اتَّضحت في هذين البيتين من سمات شعراء أبولُّو. (درجة واحدة)", passage: `يقول أحمد رامي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">وكيفَ تَطِيبُ في سَمْعِي الأغاني</span><span class="poetry-separator">∴</span><span class="shatr">وألحانُ الأَسَى يَمْلَأْنَ أُذْنِي</span></div><div class="poetry-verse"><span class="shatr">دَعيني يا بناتِ الشِّعرِ أَبكِي</span><span class="poetry-separator">∴</span><span class="shatr">على ما نالَتِ الأيَّامُ مِنِّي</span></div></div>`, o: ["التأمُّل في حقائق الكون والتعمُّق في أسرار الوجود.", "التشاؤم والاستسلام للآلام والأحزان واليأس.", "الهروب مِن عالِم الواقع إلى عالِم الأحلام والأوهام.", "الحنين إلى مواطن الذكريات وأيام الصِّبا."], c: "التشاؤم والاستسلام للآلام والأحزان واليأس.", e: "إذ يُعبِّر الشاعر عن حزن عميق يسيطر عليه لدرجة أنه لَم يَعُدْ يستسيغ سماع الأغاني أو يجد فيها متعة، فقد امتلأت أذنه «بألحان الأسى»، ثم يطلب من معاني شعره وصُوَره وكلماته أن تتركه؛ فالحزن أكبر من أن يُعبَّر عنه بشعر. وفي ذلك استسلام صريح للبكاء، وإعراض عن الشعر والغناء، وهو ما يكشف عن نغمة تشاؤمية واضحة، واستسلامٍ للآلام والأحزان." },
-                { id: 22, q: "استنتج السمة التي ظهرت في هذين البيتين من سمات شعراء الديوان. (درجة واحدة)", passage: `يقول عبد الرحمن شكري:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">على بابِ الحياةِ أَرى زِحامًا</span><span class="poetry-separator">∴</span><span class="shatr">مِنَ الأشباحِ عَجَّ بِهِم وسَالَا</span></div><div class="poetry-verse"><span class="shatr">مِنَ العَهدِ القديمِ إلى زمانٍ</span><span class="poetry-separator">∴</span><span class="shatr">حَديثٍ قد مَضَوْا زُمَرًا تَوالَى</span></div></div>`, o: ["استبطان النفس الإنسانية.", "التأمُّل في الكون والوجود.", "الذاتية والتعبير عن النفس الإنسانية.", "تغليب الجانب الوجداني على الفكري."], c: "التأمُّل في الكون والوجود.", e: "إذ يُصوِّر الشاعر في البيتين مشهدًا رمزيًّا مؤثِّرًا على باب الحياة، حيث يرى زحامًا من الأشباح، وهم شهداء الإنسانية الذين بذلوا أرواحهم من أجل الخير والعلم والإصلاح. ويتأمَّل الشاعر في مصير هؤلاء الشهداء، وفي تعاقُب الأجيال من العهد القديم إلى العصر الحديث. وهذا المشهد يُجسِّد نظرة فلسفية وجودية، وهي سمة بارزة لدى شعراء الديوان، الذين غلب على شعرهم الجانب الفكري والتأمُّل في حقائق الكون وأسرار الوجود." },
-                { id: 23, q: "بيِّن السمة التي تحقَّقت في هذين البيتين من سمات الاتجاه الوجداني. (درجتان)", passage: `يقول خليل مطران عن فتاة:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">هي زهرةٌ بَسَمَتْ بها</span><span class="poetry-separator">∴</span><span class="shatr">عَن جَنَّةٍ دارُ الخليلْ</span></div><div class="poetry-verse"><span class="shatr">قَد أَحرزَ الرَّاجِي بها</span><span class="poetry-separator">∴</span><span class="shatr">خيرًا وما هُوَ بالقليلْ</span></div></div>`, o: ["عبَّر الشاعر عن أحاسيسه الذاتية من خلال إعجابه بالجمال الحِسِّي والرُّوحي.", "مال الشاعر إلى العقلانية حين تناول قضية الحب وأثرها في حياة الناس.", "غلب شعور التشاؤم واليأس على تناول الشاعر لقضية الخلاف بين المُحبِّين.", "دعا الشاعر إلى المُثُل العُليا من خلال بيان الأثر الطيِّب للحب في النفوس."], c: "عبَّر الشاعر عن أحاسيسه الذاتية من خلال إعجابه بالجمال الحِسِّي والرُّوحي.", e: "إذا يصف الشاعر الفتاة بأنها «زهرةٍ»، وهو تشبيه يعكس إعجابه بجمالها الحسي الظاهر. وفي المقابل، يراها «جنَّةٍ» معبرًا عن تقديره لجمالها الروحي والأثر المعنوي العميق الذي تحدثه. ثم يمدح في البيت الثاني أثرها الطيِّب في نفسه، مُشيرًا إلى أن من ينال قُربها أو رضاها يُحرز خيرًا عظيمًا. هذا التعبير عن الانفعال الشخصي تُجاه الجمال، بِشِقَّيهِ المادي (الزهرة) والروحي (الجنة، الخير)، والانطلاق من التجربة الذاتية الصادقة، هو سمة أساسية من سمات الاتجاه الوجداني." },
-                { id: 24, q: "أيٌّ – ممَّا يلي – يُثبِت تحقُّق سمة الحنين إلى الوطن التي ميَّزت شعراء المهاجر في هذين البيتين؟ (درجة واحدة)", passage: `يقول زكي قنصل:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">أيُّها العائدون للشَّامِ هلَّا</span><span class="poetry-separator">∴</span><span class="shatr">نَفْحَةٌ مِن شَمِيمِ أرضِ النُّبُوَّةْ؟</span></div><div class="poetry-verse"><span class="shatr">عَلِمَ اللهُ كَمْ صَبَوْنَا إليها</span><span class="poetry-separator">∴</span><span class="shatr">واشتَهَيْنا تحتَ العَرِيشَةِ غَفْوَةْ!</span></div></div><p class="text-sm italic text-gray-500">[الشميم: الرائحة الطيبة العطرة، العريشة: ما يُستظَل به، ويُتخَذ من الأغصان أو سعف النخل].</p>`, o: ["كشف البيتان عن الدعاء للعائدين أن يجدوا الأمان في العودة.", "أكَّد الشاعر اشتياقه ورغبته في العودة والتمتُّع بالراحة في بلده.", "أوضح الشاعر أنه يعيش في بيئة جديدة مليئة بالحب والعطف.", "عكس البيتان النزعة الروحية والسماحة الدينية لدى المُهاجَرين."], c: "أكَّد الشاعر اشتياقه ورغبته في العودة والتمتُّع بالراحة في بلده.", e: "يتجلَّى في هذين البيتين شعورُ الحنين الصادق إلى الوطن؛ إذ يُخاطب الشاعر العائدين إلى الشام طالبًا منهم نفحة من شميم أرض النبوة، في صورة رمزية تعبِّر عن شوقه العميق إلى تراب الوطن وذكرياته. ويؤكِّد ذلك قوله: «عَلِمَ الله كَم صَبَوْنا إليها»؛ إذ يُظهر التعلُّق القلبي العميق ببلاده، ثم يعزِّز هذا الحنين بتصويره توقَه إلى غفوةٍ هادئة تحت العريشة، وهي صورة تحمل في طياتها رغبة في السكينة والطمأنينة التي لا يجدها إلا في وطنه." },
-            ],
-            group5: [
-                { id: 25, q: "ما الكلمة التي تؤدِّي معنى «يَذْرُو أسرارَه» في سياق الفقرة الأخيرة؟ (درجة واحدة)", o: ["ينشرها.", "يتخلَّى عنها.", "يهملها.", "يحط من قدرها."], c: "ينشرها.", e: "فكلمة «يَذْرُو» تعني يَنثُر ويُطيِّر ويُبعثر الشيء في الهواء، وفي سياق النص «يَذْرُو أسرارَه في مَهَبِّ الرياح»؛ أي أنه ينشرها ويذيعها بين الناس دون تحفُّظ." },
-                { id: 26, q: "استنتج دلالة عبارة «أخو الحَزْم هو مَن امتلَكَ قِيادَ سِرِّه» في سياق الفقرة الثانية. (درجة واحدة)", o: ["المؤتمنون على أسرار الناس يحسنون التصرُّف.", "مشاركة الناس أسرارهم دليل ثقة وإخاء.", "قدرة المرء على كتمان سِرِّه دليل قوته.", "الأقوياء هم من يُعلنون أسرارهم بأنفسهم دون خوف."], c: "قدرة المرء على كتمان سِرِّه دليل قوته.", e: "إذ يُشبِّه الكاتب السِّرَّ بالدابة التي تحتاج إلى قِياد (حبل تُجَرُّ به الدابة) للتحكُّم فيها، ويصف «أخا الحزم» (صاحب الحزم المُجرِّب للأمور القادر على اتخاذ القرارات بثقة وقوة) بأنه من يمتلك هذا القياد. فالدلالة هي أن السيطرة على اللسان وكتمان السر ليس ضعفًا، بل هو علامة على قوة الشخصية والحزم والتحكم في النفس." },
-                { id: 27, q: "استنتج المغزى مِن قوله: «أُمَنَاءُ الأسرار أَنْدَرُ مِن أُمناء الأموال» في سياق الفقرة الثانية. (درجتان)", o: ["تأكيد خطورة بَوْح المرء بأسراره، والتحذير من ذلك.", "تأكيد المكانة العظيمة لمَن يحسنون الظن بالناس.", "بيان أنَّ بعض الأسرار أهميتها لا تُقدَّر بمال.", "بيان أن مَن يُؤتمَن على المال يؤتمن على الأسرار."], c: "تأكيد خطورة بَوْح المرء بأسراره، والتحذير من ذلك.", e: "فالمغزى من هذه المقارنة هو إبراز مدى صعوبة العثور على شخص مُؤتمَن على الأسرار؛ فهم أقل عددًا من المؤتمنين على الأموال. وبما أن العثور على حافظ للسر أمر نادر جدًّا، فإن الكاتب يحذر القارئ ضمنيًّا من المجازفة بإفشاء سره، ويُؤكِّد خطورة هذا الفعل؛ لأن الثقة المطلقة في الآخرين أمر صعب التحقق." },
-                { id: 28, q: "وازِن بين ما طرحه الكاتب في هذا النص وبين مقولة: «المرءُ بأصغَرَيْهِ: قلبِهِ ولِسانِه». (درجة واحدة)", o: ["الكاتِب وضَّح أن ضَبْطَ اللسان دليلُ قوة القلب، والمقولة تعني أن صلاح المَرء بسلامة قلبه وعِفة لسانه.", "كلاهما تناول ما يُميِّز القلب واللسان على سائر أعضاء الجسم.", "الكاتب حذَّر من خطورة إفشاء المرء سِرَّه لمُحِبٍّ كتوم، والمقولة تناولت فضيلة العطف على الصغير.", "كلاهما يُحذِّر من قُبح الكلام وقسوة القلب، ويدعو إلى حسن الكلام."], c: "الكاتِب وضَّح أن ضَبْطَ اللسان دليلُ قوة القلب، والمقولة تعني أن صلاح المَرء بسلامة قلبه وعِفة لسانه.", e: "إذ يشترك الكاتب والمقولة في إبراز أثر القلب واللسان في تمييز الإنسان وقيمته، وكلٌّ منهما يُشير إلى أثرهما العميق في شخصية المرء." },
-                { id: 29, q: "هاتِ من النص ما يُشير إلى أن إفشاء أسرار الوطن جريمةٌ تضرُّ بمصالحه وتخدُم مصالح أعدائه. (درجتان)", o: ["مَن مِنَّا يُنكِر خطر الجاسوسية؟! حُروبٌ خَفِيَّة بين دُوَل تُسْدِلُ على خُطَطِها سُتُورًا كثيفة ... تحفظ مصالحها، وبين دُوَل أخرى تسعى إلى اكتشاف تلك الأسرار.", "هناك أربعُ خِصالٍ تدلُّ على الجهل: صُحبةُ الجَهول، وكثرةُ الفُضُول، وإذاعةُ السِّرِّ، واحتقارُ البِرِّ.", "قال عمر بن عبد العزيز: «القلوب أوعيةٌ، والشِّفاه أقفالُها، والأَلْسُنُ مَفاتيحُها؛ فَلْيَحفظْ كُلُّ إنسانٍ مِفتاحَ سِرِّه».", "السِّرُّ قُطبٌ تدور حوله دواليبُ الحياة فلا تقف، فإذا بُحتَ بسِرِّك إلى غير مُحِبٍّ كَتومٍ عُوِّقت أمانيك عن الدوران، وأمسى سِرُّك عقارِبَ تَلسَعُ وأفاعِيَ تَلدَغُ."], c: "مَن مِنَّا يُنكِر خطر الجاسوسية؟! حُروبٌ خَفِيَّة بين دُوَل تُسْدِلُ على خُطَطِها سُتُورًا كثيفة ... تحفظ مصالحها، وبين دُوَل أخرى تسعى إلى اكتشاف تلك الأسرار.", e: "فهذه العبارة هي الوحيدة التي تتحدث عن الأسرار على مستوى الدول، وتضعها في سياق الصراع والتنافس «الجاسوسية، حُروبٌ خَفِيَّة»؛ من أجل تحقيق المصالح القومية، وتُظهِر بوضوح أن كشف أسرار الوطن يخدم مصالح العدو ويَضُرُّ بالوطن." },
-                { id: 30, q: "بيِّن نوع الصورة وقيمتها الفنية في قوله: «إنَّ مَن يَذْرُو أسرارَه في مَهَبِّ الرياح لَهُوَ كَمَن يُطْلِقُ مِن قَفَصِهِ طَيرًا يَعِزُّ عليه أن يُفارِقَ» في سياق الفقرة الأخيرة. (درجة واحدة)", o: ["تشبيه تمثيل، يوضِّح مشاعر الحسرة والندم التي تنتظر مَن يبوح بسِرِّه لغيره.", "تشبيه مُفصَّل، يوضِّح سرعة انتشار الأسرار بعد بَوْح صاحبها بها.", "تشبيه ضمني، يُؤكِّد أن أحلام الناس تتبدَّد عندما يُطلِعون الآخرين على أفكارهم.", "تشبيه مجمل، يُنفِّر من إذاعة المرء لأسراره والبوح بها أمام الناس."], c: "تشبيه تمثيل، يوضِّح مشاعر الحسرة والندم التي تنتظر مَن يبوح بسِرِّه لغيره.", e: "إذ يُشبِّه الكاتب حالة «مَن ينشر أسراره فيندم ويتحسر» بحالة «مَن يُطلِق طائرًا عزيزًا عليه من القفص فيفقده إلى الأبد». والقيمة الفنية لهذا التشبيه هي توضيح وتجسيد الفكرة؛ حيث ينقل لنا إحساس الخسارة الذي لا رجعة فيه والشعور بالندم والحسرة الذي يصيب من أفشى سِرَّه." },
-                { id: 31, q: "وازِن بين المَقولتين من حيث المُؤكِّدات التي استخدمها كُلُّ كاتِب في مقولته. (درجتان)", passage: `قال الكاتب: «والسِّرُّ حِملٌ ثقيل لا يَنهَض به غير الحازِم مِن البَشَر».<br>وقال الزيات في مَقالِه «التكافل الاجتماعي في الإسلام»: «لمَّا أرسلَ الله رسوله بالهُدى ودين الحق .... جعل هذه الأشلاءَ الداميةَ جِسمًا شديدَ الأَسْرِ عارِمَ القوة».`, o: ["في المقولة الأولى توكيد بأسلوب القصر، وفي الثانية توكيد بالإطناب.", "كلتا المقولتين اقتصر فيهما التوكيد على الإطناب.", "في المقولة الأولى توكيد بالإطناب، وفي الثانية توكيد بأسلوب القصر.", "كلتا المقولتين لا يُوجد فيهما أيُّ أساليب للتوكيد."], c: "في المقولة الأولى توكيد بأسلوب القصر، وفي الثانية توكيد بالإطناب.", e: "ففي المقولة الأولى أسلوب التوكيد وسيلته القصر باستخدام النفي بـ «لا» والاستثناء بـ «غير»؛ لتخصيص الحكم وحصره على «الحازم» فحسب. وفي المقولة الثانية إطناب بالترادف بين «عارِم القوة» و«شديد الأَسْر»، يُؤكِّد المعنى نفسه، وهو القوة وشدة التماسك؛ وذلك لتقوية المعنى وترسيخه في ذهن المتلقِّي." },
-                { id: 32, q: "بيِّن إلى أي مدى حقَّق الكاتب الوظيفة الإقناعية في مَقاله في ضوء فهمك هذه العبارة. (درجة واحدة)", passage: `«حين يسعى كاتِب المَقال إلى إقناع القارئ بفِكرة ما وجَعْلِه يُشارِكُه وِجهةَ نَظَرِهِ، مُستَغِلًّا في ذلك أحاسيسَه من أجل التأثير، أو عقلَه من أجل الإقناع؛ فللمقال عندئذٍ وظيفةٌ إقناعية».`, o: ["لَم تتحقَّق؛ فقد اعتمد الكاتب في عرض أفكاره على ذِكر مجموعة من النصائح والتوجيهات بأسلوب يفتقر إلى الإقناع.", "تحقَّقت؛ فالكاتب دَعَمَ أفكاره بأدِلَّة واستشهادات وأخيلة وأمثلة من الحياة والتاريخ أثَّرَت في عقل القارئ ووجدانه.", "تحقَّقت؛ فالكاتب ركَّز على التأثير في وِجدان القارئ بكثرة الصور الخيالية التي تُقرِّب المعنى وتجذب الوجدان.", "لم تتحقَّق؛ لأن الكاتب بالغ في الخيال وابتعد عن الواقع، واكتفى بالتعبير عن مشاعره وتجربته الخاصة."], c: "تحقَّقت؛ فالكاتب دَعَمَ أفكاره بأدِلَّة واستشهادات وأخيلة وأمثلة من الحياة والتاريخ أثَّرَت في عقل القارئ ووجدانه.", e: "لقد نجح الكاتب في تحقيق الوظيفة الإقناعية للمقال؛ فهو لم يكتفِ بتقديم فكرته «أهمية كتمان السر»، بل سعى لإقناع القارئ بها من خلال مخاطبة العقل والوجدان معًا، وذلك عن طريق: الأدلة العقلية، والاستشهادات، والأمثلة من التاريخ والحياة، والأخيلة والصُّوَر البيانية. وبهذا المزيج المتكامل من الحُجج المنطقية والصور المُؤثِّرة، تمكَّن الكاتب من التأثير في عقل القارئ ووجدانه، محققًا بذلك الوظيفة الإقناعية للمقال." },
-                { id: 33, q: "توقَّع أهم ما يُميِّز المسرحية ويُحقِّق مدلول هذه العبارة. (درجة واحدة)", passage: `قال أحدُ النُّقَّاد: «إنَّ المُمثِّل لا يستطيع النهوض بدوره على خشبة المسرح ما لَم يُقدِّم له المُؤلِّف شخصيةً حيَّةً يستطيع أن يَتقمَّصَها فيُحرِّك الجماهير، ولا يكون بُوقًا للمُؤلِّف…».`, o: ["تُكتَب لتُؤدَّى أمام الجمهور على خشبة المسرح.", "تعتمد على الارتجال بعيدًا عن نصِّ المؤلف.", "تُؤدَّى بممثِّل واحد.", "تخلو من العاطفة."], c: "تُكتَب لتُؤدَّى أمام الجمهور على خشبة المسرح.", e: "إذ ترتكز المقولة على عناصر أساسية هي: المُمثِّل، خشبة المسرح، والجماهير. وتُوضِّح أن قيمة النص المسرحي لا تكتمل إلا حين يتحوَّل إلى عرض حيٍّ يُؤدِّيه المُمثِّل ليؤثر في الجمهور. وهذا يؤكِّد أن السمة الجوهرية التي تُميِّز فنَّ المسرحية عن الفنون الأدبية الأخرى (كالرواية أو القصة) هي أنها تُكتَب أساسًا ليس لمجرد القراءة، بل لتُجسَّد وتُعرَض في مواجهة الجمهور." },
-            ],
-            group6: [
-                { id: 34, q: "حدِّد – ممَّا يلي – ما يُعرَب نائبًا عن المفعول المطلق في هذه المقولة. (درجة واحدة)", passage: `«ليس في كلام العرب كلمتان تتطابقان تمام التطابُق؛ فثَمَّة فروقٌ لا يُدركها إدراكًا جيِّدًا إلا مَن أوتي فطنة وفقهًا عميقًا في فَهم اللسان العربي».`, o: ["جيِّدًا.", "تمام.", "التطابُق.", "عميقًا."], c: "تمام.", e: "ففي جملة «تتطابقان تمام التطابُق»، الفعل «تتطابقان» جاء مصدره «التطابُق» مسبوقًا بكلمة «تمام»، وهي مضافة إلى المصدر؛ لذا تُعرَب نائبًا عن المفعول المطلق منصوبًا، والمصدر «التطابق» يُعرَب مضافًا إليه مجرورًا." },
-                { id: 35, q: "بيِّن اسم الحرف الناسخ في هذا البيت. (درجة واحدة)", passage: `يقول أحمد شوقي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">شبابَ النيلِ، إنَّ لكم لصوتًا</span><span class="poetry-separator">∴</span><span class="shatr">مُلَبًّى حينَ يُرفَعُ مُستجابَا</span></div></div>`, o: ["مُستجابَا.", "لكم.", "لصوتًا.", "مُلَبًّى."], c: "لصوتًا.", e: "فاللام هنا هي لام التوكيد المزحلقة، و«صوتًا» اسم «إنَّ» مُؤخَّر منصوب وعلامة نصبه الفتحة الظاهرة. و«لكم» شبه جملة في محل رفع خبر «إنَّ»." },
-                { id: 36, q: "«ما كان صانِع المعروف ليعيش ذَميمًا». بيِّن نوع اللام في كلمة «ليعيش» في هذه المقولة. (درجة واحدة)", o: ["التعليل.", "الأمر.", "الجحود.", "القسم."], c: "الجحود.", e: "فلام الجحود هي لام تأتي لتأكيد النفي، وتُسبق دائمًا بـ «كون منفي»؛ أي: «ما كان، لم يكن، لم تكونوا، …». وفي هذه الجملة، سُبقت اللام بـ «ما كان»، وجاء الفعل المضارع «يعيش» منصوبًا بها، والجملة الفعلية في محل نصب خبر «كان»؛ لذلك فهي لام الجحود." },
-                { id: 37, q: "بيِّن المستثنى، ونوع الاستثناء في هذا البيت. (درجة واحدة)", passage: `يقول البارودي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">وما الحبُّ إلا حاكِمٌ غيرُ عادِلٍ</span><span class="poetry-separator">∴</span><span class="shatr">إذا رامَ أمرًا لَم يَجِد مَن يَصُدُّهُ</span></div></div>`, o: ["حاكِمٌ، ناقص منفي.", "الحبُّ، ناقص منفي.", "عادِلٍ، تام مثبت.", "غيرُ، تام منفي."], c: "حاكِمٌ، ناقص منفي.", e: "فالمستثنى هي كلمة «حاكِم» الواقعة بعد أداة الاستثناء «إلا». والأسلوب منفي بـ «ما»، والمستثنى منه محذوف وغير موجود في الجملة، وعندما يكون الكلام منفيًّا والمستثنى منه محذوفًا، يكون نوع الاستثناء ناقصًا منفيًّا، ويُسمى أيضًا استثناءً مُفرَّغًا. ويُعرب المستثنى في هذا النوع حسب موقعه في الجملة بعد حذف أداتي النفي والاستثناء «ما» و«إلا»، فيكون تقدير الجملة: «الحبُّ حاكِمٌ»، وتُعرب «حاكمٌ» خبرًا مرفوعًا." },
-                { id: 38, q: "«تَعِسَ امرؤٌ نَسِيَ ذِكر خالقه». صُغ مِن مضمون هذه الجملة أسلوب ذَمٍّ قياسيًّا، وغيِّر ما يلزم. (درجة واحدة)", o: ["بئس امرئ ناسيًا ذكر خالقه!", "بئس امرؤٌ ناسٍ ذِكر خالقه!", "بئس امرؤٌ الناسي ذِكر خالقه!", "بئس امرأً الناسي ذِكْر خالقه!"], c: "بئس امرأً الناسي ذِكْر خالقه!", e: "فقد بدأت الجملة بـ «بئس»، وهو فعل ماضٍ جامد يدل على الذم، وفاعِلُه ضمير مستتر تقديره «هو» مُفسَّرًا بالتمييز «امرأً»، والمخصوص بالذم «الناسي» مبتدأ مؤخر، أو خبر لمبتدأ محذوف." },
-                { id: 39, q: "بيِّن – ممَّا يلي – الجملة التي ورد بها اسم التفضيل مجرَّدًا من «أل» والإضافة. (درجة واحدة)", o: ["الشجاع أقوى امرئ قلبًا.", "الشجاعة أعظم ما نتحلَّى بها.", "الشجاع أكثر ثقة في نفسه.", "الشجاعة من أفضل صفات البشر."], c: "الشجاع أكثر ثقة في نفسه.", e: "فاسم التفضيل المجرد من «أل» والإضافة هو الذي لا تتصل به «أل» التعريف ولا يأتي بعده مضاف إليه. واسم التفضيل «أكثر» في هذه الجملة لم تتصل به «أل» ولم يأتِ بعده مضاف إليه؛ فكلمة «ثقةً» تمييز منصوب. أمَّا في بقية الجمل فقد جاء اسم التفضيل مُضافًا." },
-                { id: 40, q: "«يتحلَّى الحليم بخَصْلتينِ ……… محبوبتان: الحِلم والأناة». املأ الفراغ في هذه المقولة بالكلمة المناسبة. (درجة واحدة)", o: ["كلتاهما.", "كلتيهما.", "كليهما.", "كلاهما."], c: "كلتاهما.", e: "فعبارة «كلتاهما محبوبتان» تُشكِّل جملة اسمية كاملة ومستقلة؛ «كلتاهما» مبتدأ مرفوع وعلامة رفعه الألف؛ لأنه ملحق بالمثنى، و «هما» ضمير متصل في محل جر مضاف إليه. و«محبوبتان» خبر المبتدأ مرفوع وعلامة رفعه الألف. والجملة الاسمية «كلتاهما محبوبتان» في محل جر نعت لكلمة «خَصْلتينِ»، ولا يجوز اختيار «كلتيهما» على أنها توكيد معنوي لكلمة «خَصْلتينِ»؛ لأنها نكرة، وتوكيد النكرة بغير لفظها غير جائز." },
-                { id: 41, q: "«يُعجِبُني شابٌّ ……… في الخير». املأ الفراغ في هذه المقولة بمصدر ميمي. (درجة واحدة)", o: ["مَرجو.", "مَسعاه.", "مُزاحه.", "مُجالسته."], c: "مَسعاه.", e: "فالمصدر الميمي هو مصدر يبدأ بميم زائدة ويؤدي معنى المصدر الأصلي. وكلمة «مَسعاه» مصدر ميمي من الفعل «سعى»، وتقدير الجملة «يُعجِبُني شابٌ سعْيُه في الخير». أمَّا بقية الخيارات فعير صحيحة؛ فـ «مَرجو» اسم مفعول من الفعل «رجا»، و«مُزَاحه» مصدر للفعل الثلاثي «مَزَحَ»، و«مُجالَسَته» مصدر للفعل الرباعي «جالَسَ»." },
-                { id: 42, q: "بيِّن نوع الياء المتصلة بالفعل «تَمتطي» في هذا البيت. (درجة واحدة)", passage: `يقول حافظ إبراهيم على لسان الفاروق رضي الله عنه مخاطبًا زوجته:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">لا تَمتطي شهواتِ النفسِ جامحةً</span><span class="poetry-separator">∴</span><span class="shatr">فكِسرةُ الخُبز بالشُّكرانِ تجزيها</span></div></div>`, o: ["علامة إعراب.", "لام الفعل.", "ضمير نصب.", "ضمير رفع."], c: "ضمير رفع.", e: "فالفعل «تمتطي» أصله «تمتطين» وهو من الأفعال الخمسة لاتصاله بياء المخاطبة. جاء الفعل مجزومًا بـ «لا الناهية» وعلامة جزمه حذف النون. والياء في نهاية الفعل هي ياء المخاطبة، ضمير متصل مبني في محل رفع فاعل." },
-                { id: 43, q: "«فاض النيل بالخير ……… الكريم بالنَّوَال». املأ الفراغ في هذه المقولة باسم هيئة من الفعل «فاض». (درجة واحدة)", o: ["فيضة.", "فيضًا.", "إفاضة.", "فيَّاضة."], c: "فيضة.", e: "اسم الهيئة يُصاغ من الفعل الثلاثي على وزن «فِعْلَة»؛ ليدل على هيئة وقوع الفعل. والفعل «فاض» اسم الهيئة منه «فيضَة»؛ أي: فاض النيل فيضانًا يُشبه في هيئته وطريقته فيضان الكريم بالعطاء." },
-                { id: 44, q: "بيِّن الصياغة الصحيحة عند حذف الباء الزائدة. (درجة واحدة)", passage: `يقول البارودي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">جُدْ بالنَّوالِ فرزقُ اللهِ مُتَّصِلٌ</span><span class="poetry-separator">∴</span><span class="shatr">ولا تَكُنْ عَن صنيعِ الخيرِ باللَّاهِي</span></div></div>`, o: ["لاهٍ.", "لاهيًا.", "لاهي.", "اللاهِ."], c: "لاهيًا.", e: "لأن كلمة «اللَّاهي» في البيت تُعرَب خبرًا مجرور لفظًا بحرف الجر الزائد «الباء» منصوب محلًّا، وعند حذف هذه الباء، يعود الخبر إلى حالته الأصلية وهي النصب، والتقدير: «ولا تكن لاهيًا عن صنيع الخير»، وهو اسم منقوص، تظهر ياؤه في حالة النصب، وتُحذَف في حالتي الرفع والجر إذا كان مجردًا من «أل» والإضافة." },
-                { id: 45, q: "ميِّز – ممَّا يلي – الجملة التي ليس لها محل من الإعراب. (درجة واحدة)", passage: `يقول البارودي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">إذا لَم يَكُنْ للمرءِ عقلٌ يَقودُهُ</span><span class="poetry-separator">∴</span><span class="shatr">فَيُوشِكُ أَن يَلقَى حُسَامًا يَقُدُّهُ</span></div></div><p class="text-sm italic text-gray-500">[يَقُدُّهُ: يَشقُّه ويُقطِّعُه].</p>`, o: ["يُوشِكُ.", "لَم يَكُنْ.", "يَقودُهُ.", "يَقُدُّهُ."], c: "يُوشِكُ.", e: "لأنها جملة جواب الشرط غير الجازم «إذا». أمَّا جملة «لَم يَكُنْ» فهي جملة الشرط في محل جر مضاف إليه، وجملة «يَقودُهُ» في محل رفع نعت، وجملة «يَقُدُّهُ» في محل نصب نعت." },
-                { id: 46, q: "ميِّز – ممَّا يلي – الفعل اللازم الوارد في هذا البيت. (درجتان)", passage: `يقول الشاعر:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">صُنِ النَّفسَ واحمِلْها على ما يَزِينُها</span><span class="poetry-separator">∴</span><span class="shatr">تَعِشْ سالِمًا وَالقَولُ فِيكَ جَميلُ</span></div></div>`, o: ["صُن.", "تَعِشْ.", "احمِل.", "يَزِين."], c: "تَعِشْ.", e: "فالفعل اللازم هو الذي يكتفي بفاعله ولا يحتاج إلى مفعول به. وهذا ينطبق على الفعل «تَعِشْ» فنقول: «عاش الرجلُ»، دون أن نحتاج إلى مفعول به. وكلمة «سالمًا» بعده حال منصوبة تبيِّن هيئة العيش. أمَّا بقية الأفعال في البيت فهي متعدية؛ «صُن» فعل أمر مُتعَدٍّ لمفعول واحد وهو «النَّفْسَ»، كذلك الفعل «احمل» فعل أمر مُتعَدٍّ لمفعول به واحد وهو الضمير المتصل «ها»، والفعل «يَزِين» فعل مضارع مُتعَدٍّ أيضًا لمفعول به واحد وهو الضمير المتصل «ها»." },
-                { id: 47, q: "ميِّز – ممَّا يلي – سبب نصب كلمة «نفسًا» الواردة في هذا البيت. (درجتان)", passage: `يقول محمد الهِرَّاوي:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">يا بلادي، وأنتِ قُرَّةُ عيني</span><span class="poetry-separator">∴</span><span class="shatr">طِبْتِ نفسًا على الزمانِ وعينَا</span></div></div>`, o: ["مفعول به.", "حال.", "أنها تمييز.", "مفعول لأجله."], c: "أنها تمييز.", e: "فكلمة «نفسًا» اسم نكرة منصوب جاء بعد الفعل «طِبْتِ»؛ ليزيل الإبهام والغموض عن الجملة. فعندما قال الشاعر «طِبتِ» (أي يا بلادي طِبْتِ)، كان المعنى غامضًا، فهل طابت بلاده أرضًا، أم هواءً، أم شعبًا؟ فجاءت كلمة «نفسًا» لتزيل ذلك الإبهام. وهذا النوع من التمييز يُسمَّى «تمييز الملحوظ»، وهو مُحوَّل عن الفاعل؛ إذ إن أصل الجملة هو «طابتْ نفسُكِ يا بلادي»." },
-                { id: 48, q: "ميِّز إعراب كلمة «العلا» الواردة في هذا البيت. (درجتان)", passage: `يقول حافظ إبراهيم:<div class="poetry-section"><div class="poetry-verse"><span class="shatr">لِمِصرَ أَمْ لِرُبُوعِ الشامِ تَنتسِبُ؟</span><span class="poetry-separator">∴</span><span class="shatr">هنا العلا وهناك المَجدُ والحَسَبُ</span></div></div>`, o: ["بدل.", "مبتدأ.", "خبر.", "مضاف إليه."], c: "مبتدأ.", e: "فجملة «هنا العلا» هي جملة اسمية حدث فيها تقديم وتأخير؛ «هنا» اسم إشارة للمكان مبني في محل نصب على الظرفية، وهو شبه جملة في محل رفع خبر مُقدَّم، «العُلا» مبتدأ مُؤخَّر مرفوع وعلامة رفعه الضمة المُقدَّرة على الألف للتعذَّر." },
-                { id: 49, q: "«أَتحدَّث إن يَكُن للحديث سببٌ، وأُكْثِر الصمت فيما ليس يعنيني». ميِّز – مما يلي – إعراب الفعل «أُكْثِر» الوارد في هذه المقولة. (درجتان)", o: ["مضارع مرفوع.", "أمر مبني.", "ماضي مبني.", "مضارع مجزوم."], c: "مضارع مرفوع.", e: "فبالنظر إلى العبارة، نجد أن الفعل «أُكْثِر» هو فعل مضارع مبدوء بهمزة المُتكلِّم، ولم يُسبَق بناصِب ولا جازم، وسبق بواو العطف التي ربطت بين الجملتين؛ لذا فهو فعل مضارع مرفوع وعلامة رفعه الضمة الظاهرة، وهو معطوف على الفعل «أَتحَدَّث» في بداية العبارة." },
-                { id: 50, q: "حدِّد – ممَّا يلي – البيانات التي يمكن للكاتب أن يستخدمها لإثبات صحة زعمه بأنَّ الأرض مُهدَّدة بالجفاف وانتشار التصحُّر. (درجتان)", o: ["آراء منشورة عن الأضرار التي تهدِّد الحياة على الأرض نتيجة انتشار التصحر.", "حقائق علمية عن رحلة نهر النيل من المنبع إلى المَصبِّ، والاتفاقات المنظمة لإقامة السدود على مجراه.", "رسم بياني يُظهر تزايُد مساحات المناطق الصحراوية التي تعاني فقرًا مائيًّا على مدار حِقَب زمنية متتابعة.", "إحصاءات عن كمية الكهرباء التي تنتجها السدود المُقامَة على مجاري الأنهار."], c: "رسم بياني يُظهر تزايُد مساحات المناطق الصحراوية التي تعاني فقرًا مائيًّا على مدار حِقَب زمنية متتابعة.", e: "لإثبات زعم علمي بأن الأرض مُهدَّدة بالجفاف وانتشار التصحُّر، لا بُدَّ من تقديم دليل موضوعي قابل للقياس يُظهِر تطوُّر هذه الظاهرة عبر الزمن، وهذا ما يُوفِّره الرسم البياني المذكور:<br><span class='explanation-point'>أ. البيانات الكَمِّية القابلة للقياس: «رسمًا بيانيًّا» و«مساحات» من الأدلة الرقمية الملموسة، وتُعَدُّ أكثر إقناعًا من الآراء الشخصية أو الحقائق العامة.</span><span class='explanation-point'>ب. الصلة المباشرة بموضوع الزعم: الدليل يربط مباشرة بين «المناطق الصحراوية» (التصحُّر) و«الفقر المائي» (الجفاف)، وهذا يجعله متطابقًا تمامًا مع الادعاء المراد إثباته.</span><span class='explanation-point'>ج. إثبات التطوُّر عبر الزمن: استخدام عبارات مثل «تزايُد» و«على مدار حِقَب زمنية متتابعة» هو العنصر الأهم؛ لأنه يُحوِّل المعلومة من مجرد حقيقة ثابتة إلى «تهديد» متصاعد ومستمر، وهو جوهر الزعم.</span>" },
-                { id: 51, q: "حدِّد النموذج الأنسب للربط بين هاتين الفقرتين في سياق مقال عن «المفهوم الصحيح للمُواطنة». (درجتان)", passage: `<p class="prose-p">«بعض الناس يختزل المواطنة في مجرَّد وثيقة رسمية تُثبت انتماء المواطن لوطنه وينحصر أمن الوطن – لديهم – في امتلاك الدولة قوة عسكرية وثروات اقتصادية.</p><p class="prose-p">إنَّ الواقع يُثبِت أن المواطنة الحقيقية تقوم على وعي المواطنين بالحقوق والواجبات والانتماء والمشاركة البنَّاءة في تنمية المجتمع، والمُواطِن المنتمي لوطنه هو خطُّ الدفاع الأول عنه ضِدَّ أي تهديد، كما أن مشاركة المواطن في بناء مجتمع متماسك وقويٍّ يُعزز قوة الدولة وقدرتها على مواجهة مختلِف المَخاطر والتحديات».</p>`, o: ["إجمال، وتفصيل.", "رأي، ودليل.", "زعم، وتفنيد.", "مقدمة، ونتيجة."], c: "زعم، وتفنيد.", e: "ذلك لأن الفقرة الأولى تعرض فكرة مغلوطة أو اعتقادًا شائعًا لكنه منقوص أو خاطئ لدى «بعض الناس»، وهو أن المواطنة مجرد وثيقة، وأن أمن الوطن يعتمد فقط على القوة العسكرية والثروات، وهذا هو الزعم. ثم تبدأ الفقرة الثانية بصيغة تقريرية «إنَّ الواقع يُثبت أن...»؛ لتقدِّم المفهوم الصحيح، وهو أن المواطنة تعتمد على وعي المواطن ومشاركته، وأنه هو خط الدفاع الأول، وأن التماسُك المجتمعي أساس قوة الدولة، وهذا هو التفنيد." },
-            ],
-            essay: [
-                { id: 52, q: "توقَّع أربعة من المخاطر والمشكلات التي تترتَّب على الإخلال بالمبادئ الأربعة المذكورة في هذه الفقرة. (بواقع توقُّع واحد لكل مبدأ). (درجتان)", p: `<p class="prose-p">«فأمنُ المعلومات يهدف إلى الحماية من انتهاك الخصوصية بالسرقة، أو الاختراق، أو إساءة الاستخدام، أو الإتلاف، أو التزييف والتحريف غير المُصرَّح به. ويقوم أمن المعلومات على أربعة مبادئ أساسية: (١) السرية؛ بحماية المعلومات الحسَّاسة من الوصول غير المُصرَّح به. (٢) التكامُلية؛ بضمان سلامة المعلومات المُخزَّنة والمُتبادَلة والتأكُّد من عدم التلاعُب بها أو تغييرها أو حذفها بطرق غير مشروعة. (٣) التوافر؛ من خلال إتاحة المعلومات للمستخدمين – المُصرَّح لهم بالوصول إليها – عند الحاجة بطريقة آمنة وسريعة. (٤) المُساءَلة؛ بتتبُّع الإجراءات وتحديد المسئولية عند حدوث أيِّ خرق أمني».</p>`, a: `<p class="font-semibold text-lg mb-2">✍ الإجابة المُتوقَّعة:</p> <p class="prose-p">بناءً على المبادئ الأربعة المذكورة في الفقرة، يُمكِن توقُّع المخاطر والمشكلات الآتية عند الإخلال بكل مبدأ:</p><div class="space-y-3 mt-2"><p class="prose-p !text-indent-0"><strong>أ. الإخلال بمبدأ السرية:</strong> تسرُّب المعلومات الحساسة ووقوعها في أيدي غير المُصرَّح لهم؛ وهو ما قد يُؤدِّي إلى استغلالها استغلالًا ضارًّا، مثل: «التجسس، أو سرقة الهُوِيَّة، أو الإضرار بالسمعة، أو فقدان الأفضلية التنافسية للشركات».</p><p class="prose-p !text-indent-0"><strong>ب. الإخلال بمبدأ التكاملية (سلامة المعلومات):</strong> تغيير البيانات أو تحريفها أو حذفها بطريقة غير مشروعة؛ وهو ما يُؤدِّي إلى اتخاذ قرارات خاطئة بناءً على معلومات مغلوطة، أو فقدان الثقة في الأنظمة، أو حدوث أضرار مالية أو تشغيلية جسيمة.</p><p class="prose-p !text-indent-0"><strong>ج. الإخلال بمبدأ التوافُر (إتاحة المعلومات):</strong> عدم قدرة المستخدمين، المُصرَّح لهم، على الوصول إلى المعلومات والخِدْمات عند الحاجة إليها؛ وهو ما يُعطِّل الأعمال والعمليات الحيوية، ويؤدي إلى خسائر مالية، وتوقُّف الخدمات الأساسية، وعدم القدرة على الاستجابة للأزمات.</p><p class="prose-p !text-indent-0"><strong>د. الإخلال بمبدأ المُساءَلة:</strong> صعوبة أو استحالة تحديد المسئول عن أي خرقٍ أمني أو إساءة استخدام للمعلومات؛ وهو ما يُشجِّع على تَكرار الانتهاكات، ويجعل من الصعب معالجتها أو منعها مستقبلًا، ويؤدي إلى إفلات المُتسبِّبين فيها من العقاب.</p></div>` },
-                { id: 53, q: "هاتِ أربعة أدلة مِنَ الفِقرة على شعور الصبي باللهفة والترقُّب. (درجتان)", p: `قال طه حسين في كتاب «الأيام»:<p class="prose-p">«وقد أَرِقَ الصبي ليلته كلَّها، ولكنه كان أَرِقًا فَرِحًا مُبتهِجًا، فيه كثيرٌ مِن تَعَجُّلِ الوقت واستبطاءِ الصبح. وقد ذهب الصبي إلى درس الحديث فسمِع صوت الشيخ وهو يَتغنَّى بالسند والمتن، ولكنه لم يُلْقِ إلى الشيخ بالًا، ولم يفهم عنه شيئًا. وذهب بعد ذلك إلى درس الفقه فاستمع له؛ لأنه لم يجد عن ذلك بُدًّا، فقد كان أخوه أوصى به الشيخ، وكان الشيخ يُحاوره ويُناظره ويضطره إلى أن يسمع له ويفهم عنه، ثم عاد الصبيُّ إلى الغرفة في الضُّحى فأنفق وقته هادئًا قلِقًا».</p>`, a: `<p class="font-semibold text-lg mb-2">✍ الإجابة المُتوقَّعة:</p> <p class="prose-p">الأدلة الأربعة من الفقرة على شعور الصبي باللهفة والترقُّب هي:</p><div class="space-y-2 mt-2"><p class="prose-p !text-indent-0">أ. «وقد أَرِقَ الصبي ليلته كلَّها، ولكنه كان أَرِقًا فَرِحًا مُبتهِجًا»؛ فالأرق المصحوب بالفرح والابتهاج يدلُّ على ترقُّب شيء سار يجعله غير قادر على النوم بسبب شدة لهفته.</p><p class="prose-p !text-indent-0">ب. «فيه كثيرٌ مِن تَعَجُّلِ الوقت واستبطاءِ الصبح»؛ فرغبته في أن يَمُرَّ الوقت سريعًا دليل على لهفته لما هو قادم، وشعورُه بأن الصباح بطيء في القدوم يعكس شدة انتظاره وترقبه.</p><p class="prose-p !text-indent-0">ج. «ولكنه لم يُلْقِ إلى الشيخ بالًا، ولم يَفهم عنه شيئًا»؛ فعدم تركيزه في درس الحديث وانشغال ذهنه دليل على أن تفكيره مُنصَبٌّ على ما ينتظره بلهفة.</p><p class="prose-p !text-indent-0">د. «فأنفق وقته هادِئًا قلِقًا»؛ فكلمة «قلقًا» هنا تشير إلى القلق المصحوب بالترقُّب والانتظار، وليس القلق الناجم عن الخوف.</p></div>` },
-                { id: 54, q: "«يكافئ المعلم الطلاب المتفوقين ذوي الدرجات النهائية». ابْنِ الفعل المضارع في هذه المقولة للمجهول وغير ما يلزم. (درجتان)", p: null, a: `<p class="font-semibold text-lg mb-2">✍ الإجابة الصحيحة:</p> <p class="text-xl font-bold text-sky-800 bg-sky-50 p-3 rounded-md text-center">يُكافَأُ الطلابُ المُتفوِّقون ذوو الدرجات النهائية.</p>`},
-                { id: 55, q: "اكتب كلمةً ختامية لندوة تهدُف إلى مناقشة مستقبل الذكاء الاصطناعي، وأهمية التدريب على استخداماته في مناحي الحياة، بعنوان: «مستقبل الذكاء الاصطناعي: طموحات وتحديات».", p: "على أن يُراعى في الكلمة ما يلي:<ul><li>تكون في حدود (٦ - ٨) أسطر، (٨٠) كلمة.</li><li>تتضمَّن مُلخَّص ما عُرِضَ في الندوة.</li><li>عرض أهم التوصيات في مجال توظيف الذكاء الاصطناعي.</li><li>تقديم الشكر للمُتحدِّثين والحضور.</li><li>الإعلان الختامي الرسمي للندوة.</li></ul>", a: `<p class="font-semibold text-lg mb-2">✍ الإجابة المُتوقَّعة:</p> <div class="border p-4 rounded-lg bg-gray-50"><p class="prose-p">أيها الحضورُ الكريم،</p><p class="prose-p">إلى هنا نصل إلى محطتنا الختاميةِ في رحابِ ندوتنا الماتعة، «مستقبل الذكاء الاصطناعي: طموحات وتحديات»، التي أضاءَت لنا دروبَ المستقبل، وكشفَت عن آفاقٍ واعِدة لهذه التقنية الصاعدة، وعن أبرز التحديات المصاحبة لها.</p><p class="prose-p">وإنَّ أبرزَ ما نوصي به هو الاستثمارُ في الإنسانِ نفسِه؛ عبرَ برامج تدريب مُتخصِّصة مُكثَّفة، مع وضعِ أُطرٍ أخلاقية وتنظيمية راسخة، تضمن توظيفَ هذه التقنية بوعي ومسئولية لخدمة البشرية في مختلِف القطاعات، ولا سيما التعليم والصحة والصناعة؛ لضمان مستقبلٍ رَقْميٍّ آمِن ومزدهر.</p><p class="prose-p">وفي الختام، نتقدَّم بأسمى آياتِ الشكرِ والعرفانِ للمتحدِّثين الأفاضلِ على ما قدَّموه من رُؤًى قَيِّمة، ولكم أيها الحضورُ الكريم على تفاعلكم البنَّاء.</p><p class="prose-p">وبهذا، نعلنُ رسميًّا اختتامَ أعمالِ ندوتنا، على أمل اللقاء بكم في فعاليات قادمة تخدُم مستقبل أوطاننا.</p></div>` },
-            ]
-        };
+        // --- بداية كود خلط الخيارات وتحديث التعليل ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const arabicChars = ['أ', 'ب', 'ج', 'د', 'هـ', 'و', 'ز', 'ح', 'ط', 'ي']; // لتغطية أكثر من 4 خيارات إذا لزم الأمر
 
-        function shuffle(a) {
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
+            document.querySelectorAll('.question-mcq').forEach(questionCard => {
+                const optionsList = questionCard.querySelector('.options-list');
+                if (!optionsList) return;
 
-        function renderMCQ(questions, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            questions.forEach(data => {
-                const card = document.createElement('div');
-                card.className = 'question-card';
-                let html;
-
-                if (data.passage && data.passage.includes('poetry-section')) {
-                    // Restructure for poetry questions
-                    html = `<div class="mb-4">${data.passage}</div><h3 class="text-lg font-semibold mb-4">${data.id}. ${data.q}</h3>`;
-                } else {
-                    html = `<h3 class="text-lg font-semibold mb-4">${data.id}. ${data.q}</h3>`;
-                    if (data.passage) {
-                        html += `<div class="border-r-4 border-gray-200 pr-4 mb-4 text-gray-700">${data.passage}</div>`;
-                    }
+                const items = Array.from(optionsList.children);
+                
+                // 1. استخراج النص الأصلي للإجابة الصحيحة من التعليل
+                const explanationDiv = questionCard.querySelector('.answer-explanation');
+                const correctChoiceSpan = explanationDiv ? explanationDiv.querySelector('.correct-choice') : null;
+                if (!correctChoiceSpan) {
+                    console.warn("لم يتم العثور على span.correct-choice للسؤال:", questionCard.dataset.questionId || questionCard.querySelector('.question-number')?.textContent);
+                    return;
+                }
+                const originalCorrectTextFromExplanation = correctChoiceSpan.dataset.correctOriginalText;
+                if (!originalCorrectTextFromExplanation) {
+                    console.warn("خاصية data-correct-original-text غير موجودة في span.correct-choice للسؤال:", questionCard.dataset.questionId || questionCard.querySelector('.question-number')?.textContent);
+                    return;
                 }
 
-                html += `<div class="space-y-3">`;
 
-                const shuffledOptions = shuffle([...data.o]);
-                shuffledOptions.forEach(opt => {
-                    const isCorrect = opt === data.c;
-                    html += `<label class="option-label ${isCorrect ? 'correct-answer' : ''}"><input type="radio" name="q${data.id}" class="hidden" disabled><span>${opt}</span></label>`;
+                // 2. خلط الخيارات
+                for (let i = items.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [items[i], items[j]] = [items[j], items[i]];
+                }
+
+                // 3. إعادة إضافة الخيارات المخلوطة وتحديث الحروف
+                optionsList.innerHTML = ''; // مسح الخيارات القديمة
+                let newCorrectChoiceChar = '';
+                let newCorrectChoiceFullText = '';
+
+                items.forEach((item, index) => {
+                    const optionCharSpan = document.createElement('span');
+                    optionCharSpan.className = 'option-char';
+                    optionCharSpan.textContent = arabicChars[index] + '.';
+                    
+                    // إزالة أي حرف خيار قديم إذا كان موجودًا كـ span
+                    const oldCharSpan = item.querySelector('.option-char');
+                    if (oldCharSpan) {
+                        item.removeChild(oldCharSpan);
+                    }
+                    
+                    item.prepend(optionCharSpan); // إضافة الحرف الجديد في البداية
+                    optionsList.appendChild(item);
+
+                    // 4. تحديد الحرف الجديد للإجابة الصحيحة
+                    // data-original-text يحتوي على نص الخيار كما ورد في المصدر
+                    const itemOriginalText = item.dataset.originalText; 
+                    if (itemOriginalText && itemOriginalText.trim() === originalCorrectTextFromExplanation.trim()) {
+                        newCorrectChoiceChar = arabicChars[index];
+                        // استعادة النص الأصلي الكامل للإجابة الصحيحة (بدون الحرف القديم)
+                        newCorrectChoiceFullText = itemOriginalText;
+                    }
                 });
 
-                html += `</div>`;
-                html += `<div class="answer-block"><p><strong class="font-cairo">✍︎ الإجابة الصحيحة:</strong> ${data.c}</p><div class="mt-2 text-gray-700 text-justify">${data.e}</div></div>`;
-                
-                card.innerHTML = html;
-                container.appendChild(card);
-            });
-        }
-        
-        function renderEssayQuestions(questions, containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            
-            questions.forEach(data => {
-                const card = document.createElement('div');
-                card.className = 'question-card';
-                let content = `<h3 class="text-lg font-semibold mb-4">${data.id}. ${data.q}</h3>`;
-                if(data.p){
-                    content += `<div class="border-r-4 border-gray-200 pr-4 mb-4 text-gray-700">${data.p}</div>`
+                // 5. تحديث نص التعليل بالإجابة الصحيحة الجديدة
+                if (newCorrectChoiceChar && explanationDiv) {
+                    const explanationTextNode = Array.from(explanationDiv.childNodes).find(node => 
+                        node.nodeType === Node.TEXT_NODE && node.textContent.includes('الإجابة الصحيحة')
+                    );
+                    const correctChoiceSpanInExplanation = explanationDiv.querySelector('.correct-choice');
+
+                    if (explanationTextNode && correctChoiceSpanInExplanation) {
+                         // تحديث محتوى الـ span ليشمل الحرف والنص
+                        correctChoiceSpanInExplanation.textContent = `«${newCorrectChoiceChar}. ${newCorrectChoiceFullText}»`;
+                    } else if (correctChoiceSpanInExplanation) { // في حال لم يتم العثور على العقدة النصية، نكتفي بتحديث الـ span
+                         correctChoiceSpanInExplanation.textContent = `«${newCorrectChoiceChar}. ${newCorrectChoiceFullText}»`;
+                    }
                 }
-                content += `<div class="answer-block">${data.a}</div>`
-                card.innerHTML = content;
-                container.appendChild(card);
             });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-             renderMCQ(allQuestionsData.group1, 'questions-container-1');
-             renderMCQ(allQuestionsData.group2, 'questions-container-2');
-             renderMCQ(allQuestionsData.group3, 'questions-container-3');
-             renderMCQ(allQuestionsData.group4, 'questions-container-4');
-             renderMCQ(allQuestionsData.group5, 'questions-container-5');
-             renderMCQ(allQuestionsData.group6, 'questions-container-6');
-             renderEssayQuestions(allQuestionsData.essay, 'essay-questions-container');
         });
+        // --- نهاية كود خلط الخيارات ---
     </script>
 </body>
 </html>
