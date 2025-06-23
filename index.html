@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان الثانوية العامة - دور أول ٢٠٢٥</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- إذا كنت لا تستخدم Tailwind CSS في مشروع آخر، يمكنك إزالة هذا السطر -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <style>
+        /* --- بداية CSS لمنع تحديد النص --- */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE10+ */
+            user-select: none;         /* Standard */
+        }
+        /* السماح بتحديد النص داخل مربعات النص إذا لزم الأمر */
+        textarea, input[type="text"] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        /* --- نهاية CSS لمنع تحديد النص --- */
+
+        :root {
+            --bg-main: #f4f7f9;
+            --bg-card: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #586776;
+            --accent-color: #3498db;
+            --accent-color-darker: #2980b9;
+            --correct-answer-bg: #e8f5e9;
+            --correct-answer-border: #a5d6a7;
+            --correct-answer-text: #2e7d32;
+            --border-light: #e0e6ed;
+            --font-body: 'Cairo', sans-serif;
+            --font-heading: 'Readex Pro', sans-serif;
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.07);
+            --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.1);
+            --paragraph-indent: 2.5em; /* مسافة بادئة للفقرات */
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .exam-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .exam-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-color-darker));
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+        }
+        .exam-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.8em;
+            margin: 0;
+            font-weight: 700;
+        }
+        .exam-header p {
+            font-size: 1.2em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2em;
+            color: var(--accent-color-darker);
+            margin-top: 40px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-left: 15px;
+            font-size: 0.9em;
+        }
+
+        .passage-card {
+            background-color: #eef5f9; /* خلفية أفتح قليلاً للقطعة */
+            border: 1px solid #d1e0e8;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+        .passage-card h3 {
+            font-family: var(--font-heading);
+            color: var(--accent-color-darker);
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .passage-card p {
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+            margin-bottom: 1.1em; /* زيادة المسافة بين الفقرات قليلاً */
+            font-size: 1.05em;
+        }
+        .passage-card p:first-of-type {
+             text-indent: 0; /* الفقرة الأولى غالباً لا تبدأ بمسافة بادئة */
+        }
+
+
+        .question-card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .question-number {
+            font-family: var(--font-heading);
+            font-size: 1.6em;
+            color: var(--accent-color);
+            margin-bottom: 8px; /* زيادة المسافة قليلاً */
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: justify;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .options-list li {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-light);
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: default;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            font-size: 1.05em;
+        }
+         .options-list li:hover {
+            border-color: var(--accent-color);
+            background-color: #f1f6f9;
+        }
+
+
+        .answer-explanation {
+            margin-top: 20px;
+            padding: 18px;
+            background-color: var(--correct-answer-bg);
+            border: 1px solid var(--correct-answer-border);
+            border-right-width: 5px;
+            border-radius: 8px;
+        }
+        .answer-explanation .label {
+            font-weight: 700;
+            color: var(--correct-answer-text);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .answer-explanation .label i {
+            margin-left: 8px;
+        }
+        .answer-explanation p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            text-align: justify;
+            text-indent: var(--paragraph-indent); /* مسافة بادئة للشرح */
+            margin-bottom: 0;
+        }
+        .answer-explanation p:first-of-type {
+             text-indent: 0;
+        }
+        .answer-explanation .correct-choice {
+            font-weight: bold;
+            color: var(--correct-answer-text);
+        }
+
+        .question-mcq .option-char {
+            font-weight: bold;
+            color: var(--accent-color-darker);
+            margin-left: 8px;
+            display: inline-block; /* لضمان المسافة */
+            min-width: 1.5em; /* لتوفير مساحة متسقة للحرف */
+        }
+
+        /* لأسئلة المقال */
+        .essay-question .question-text {
+            margin-bottom: 10px;
+        }
+        .essay-answer {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #e9edf1; /* خلفية مميزة قليلاً لإجابة المقال */
+            border: 1px solid #c8d3dd;
+            border-radius: 8px;
+        }
+        .essay-answer .label {
+            font-weight: 700;
+            color: var(--accent-color-darker);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .essay-answer p {
+            font-size: 1em;
+            color: var(--text-primary);
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+            margin-bottom: 0.8em;
+        }
+         .essay-answer p:first-of-type {
+            text-indent: 0;
+        }
+        .essay-answer ul {
+            padding-right: var(--paragraph-indent); /* لمحاذاة القائمة مع النص الذي به مسافة بادئة */
+        }
+        .essay-answer ul li {
+            font-size: 1em;
+            color: var(--text-primary);
+            text-align: justify;
+            margin-bottom: 0.5em;
+        }
+
+
+        /* Poetry styling */
+        .poetry-block {
+            margin: 25px 0;
+            padding: 25px;
+            background-color: #fffbeb; /* خلفية كريمية للشعر */
+            border-right: 5px solid #f9bf25; /* لمسة ذهبية */
+            border-radius: 10px;
+            box-shadow: var(--shadow-soft);
+        }
+        .poetry-block .poet-intro {
+            font-style: italic;
+            color: #8d6e63; /* بني فاتح لمقدمة الشاعر */
+            margin-bottom: 18px;
+            font-weight: 600;
+            text-align: justify;
+            text-indent: var(--paragraph-indent);
+        }
+        .poetry-block .poet-intro:first-of-type {
+            text-indent: 0;
+        }
+
+        .poetry-block .verse {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* لمحاذاة بداية الأسطر إذا كان طولها مختلفًا */
+            margin-bottom: 12px;
+            font-size: 1.15em;
+            line-height: 2; /* زيادة ارتفاع السطر للشعر */
+        }
+        .poetry-block .hemistich {
+            width: 48%;
+            text-align: right; /* المحاذاة التقليدية للشعر العربي */
+            /* إذا أردت تجربة الضبط للشعر الطويل: */
+            /* text-align: justify; */
+            /* -moz-text-align-last: right; */
+            /* text-align-last: right; */
+        }
+        .poetry-block .verse-number {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-left: 5px;
+            min-width: 20px; /* لضمان مساحة متسقة لرقم البيت */
+        }
+        .poetry-block .verse-separator {
+            color: #b0bec5;
+            font-weight: bold;
+            padding: 0 10px; /* لإعطاء مسافة لرمز الفصل */
+        }
+        .poetry-block .annotation {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            text-align: right;
+            text-indent: var(--paragraph-indent);
+        }
+        .poetry-block .annotation:first-of-type {
+             text-indent: 0;
+        }
+
+
+        /* Footer */
+        .exam-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px 0;
+            border-top: 2px solid var(--border-light);
+            font-size: 0.95em;
+            color: var(--text-secondary);
+        }
+        .exam-footer strong {
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+
+        @media (max-width: 768px) {
+            .exam-header h1 { font-size: 2.2em; }
+            .section-title { font-size: 1.8em; }
+            .question-text { font-size: 1.05em; }
+            .options-list li { font-size: 1em; padding: 10px 15px; }
+            .exam-container { padding: 15px; }
+            .question-card, .passage-card, .poetry-block { padding: 20px; }
+
+            .poetry-block .verse {
+                flex-direction: column;
+                align-items: flex-end; /* لمحاذاة الأشطر لليمين عند التكديس */
+            }
+            .poetry-block .hemistich {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .poetry-block .verse-separator {
+                display: none; /* إخفاء الفاصل عند التكديس */
+            }
+            .poetry-block .verse-number {
+                align-self: flex-start; /* رقم البيت في بداية السطر */
+                margin-bottom: 3px;
+            }
+        }
+         @media (max-width: 480px) {
+            .exam-header h1 { font-size: 1.8em; }
+            .exam-header p { font-size: 1em; }
+            .section-title { font-size: 1.5em; }
+            .passage-card p, .question-text, .options-list li, .answer-explanation p, .essay-answer p, .poetry-block .hemistich {
+                font-size: 0.95em; /* تصغير الخطوط قليلاً للشاشات الصغيرة جداً */
+            }
+            :root { --paragraph-indent: 1.5em; } /* تقليل المسافة البادئة */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="exam-container">
+        <header class="exam-header">
+            <h1>امتحان الثانوية العامة</h1>
+            <p>دور أول ٢٠٢٥ - مع الإجابات النموذجية</p>
+        </header>
+
+        <section id="objective-questions">
+            <h2 class="section-title"><i class="fas fa-tasks"></i>أولًا - الأسئلة الموضوعية (الاختيار من متعدد)</h2>
+
+            <div class="passage-card">
+                <h3><i class="fas fa-book-reader"></i> اقرأ، ثم أجب:</h3>
+                <p>لا نُبالِغ إذا قلنا: إنَّ المعلوماتِ نِفطُ القرن الحادي والعشرين والثروة التي لا غِنى عنها للأفراد والمُؤسَّسات والدول؛ فالقدرة على التخطيط وإدارة الأعمال والتعامُل مع الأزمات يعتمد اعتمادًا كُلِّيًّا على المعلومات التي تُزوِّد الإنسان بالمعرفة التي يَبنِي على أساسها تقديراتِه لما يجب عليه القيام به واتخاذ القرارات الصحيحة؛ فمَن يَملِكِ المعلوماتِ الدقيقة في الوقت المُناسِب يَملِكِ القوة والسيطرة في عالَم لا مكان فيه للارتجال والعشوائية.</p>
+                <p>لقد صاحَبَ التقدُّم العلمي والتكنولوجي إنتاجَ كَمٍّ هائِلٍ للبيانات والمعلومات، وأمام هذا الانفجار المعرفي أصبحت إدارة المعلومات ضرورةً حتمية للاستفادة من الكَمِّ الهائل من البيانات المتاحة وتحويلها إلى معرفة ذات قيمة. لَم يَعُدْ جمعُ المعلومات هو التحدي الأكبر، بل التحدي الحقيقي يَكمُنُ في كيفية تحليلها للتحقُّق من سلامتها ودِقَّتِها وحِفظها وتأمين طُرُق إتاحتِها وتداوُلها، أيضًا تحدِّي حِفظِ حقوقِ المِلْكية الفكرية في مواجهة مخاطر القرصنة الإلكترونية، والسَّرِقَات العلمية، وانتهاك الخصوصية، واختراق السرية، والحيلولة دون نشر بيانات ومعلومات زائفة ومُضلِّلة بغرض إيقاع الضرر والابتزاز، إلى غير ذلك من مَخاطر تُهدِّد أمن المعلومات.</p>
+                <p>وهذان مثالان مِن الواقع للدَّلالة على قيمة المعلومات في عالمنا؛ فهناك ما يُسمَّى «استخبارات المصادر المفتوحة»، وتعني المعلومات المُستخلَصة من مواقع التواصل الاجتماعي والإعلانات وغيرها من الموادِّ المنشورة؛ إذ يُمكِن للشَّرِكات تحسين حملاتها التسويقية وتحقيق مَكاسِبَ ملموسةٍ من خلال رصد بيانات من المنشورات والتعليقات وإشارات الإعجاب التي يتبادلها الجمهور على مواقع التواصل الاجتماعي لتطوير خُطَط فَعَّالة وناجحة لتسويق منتجاتها؛ حيث لا غِنى عن تحليل البيانات في تحسين إستراتيجية التسويق الإلكتروني وجعل الحملات أكثر تأثيرًا واستهدافًا للجمهور المناسب، في المقابل قدَّرت بعض الدراسات أن خسائر الشركات العالمية نتيجة الهجمات الإلكترونية تجاوزت حاجز الـ (٦) تريليونات دولار في عام ٢٠٢١م.</p>
+                <p>ونظرًا لأهمية المعلومات والمَخاطر المترتِّبة على الإخلال بسلامتها أصبحت مجالًا حيوِيًّا من مجالات الأمن القومي للدُّوَل، وأُنشِئَت لها مُؤسَّساتٌ أمنية وأجهزةُ استخباراتٍ مُهَمَّتُها جمعُ وتحليل المعلومات والبيانات المتعلِّقة بالأمور السياسية والأمنية والاقتصادية والاجتماعية والثقافية؛ بهدف تزويد القادة والحكومات بالمعلومات اللازمة لاتخاذ القرارات الصائبة، وتقييم المخاطر المحتملة، وتطوير الإجراءات المُضادَّة لحماية الدول والمُؤسَّسات من التهديدات المُتوقَّعة؛ فأمنُ المعلومات يهدف إلى الحماية من انتهاك الخصوصية بالسرقة، أو الاختراق، أو إساءة الاستخدام، أو الإتلاف، أو التزييف والتحريف غير المُصرَّح به. ويقوم أمن المعلومات على أربعة مبادئ أساسية: (١) السرية؛ بحماية المعلومات الحسَّاسة من الوصول غير المُصرَّح به. (٢) التكامُلية؛ بضمان سلامة المعلومات المُخزَّنة والمُتبادَلة والتأكُّد من عدم التلاعُب بها أو تغييرها أو حذفها بطرق غير مشروعة. (٣) التوافر؛ من خلال إتاحة المعلومات للمستخدمين – المُصرَّح لهم بالوصول إليها – عند الحاجة بطريقة آمنة وسريعة. (٤) المُساءَلة؛ بتتبُّع الإجراءات وتحديد المسئولية عند حدوث أيِّ خرق أمني.</p>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">١.</p>
+                <p class="question-text">أيٌّ – ممَّا يأتي – يُعبِّر عن الفكرة العامة للموضوع؟ (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> الثروة النِّفطية.</li>
+                    <li><span class="option-char">ب.</span> أمن المعلومات.</li>
+                    <li><span class="option-char">ج.</span> المعلومات الأمنية.</li>
+                    <li><span class="option-char">د.</span> الانفجار المعرفي.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>الإجابة الصحيحة <span class="correct-choice">«ب. أمن المعلومات»</span>؛ فالموضوع يدور حول قيمة المعلومات والمَخاطر التي تُهدِّدها، وضرورة حمايتها. يبدأ الموضوع بتشبيه المعلومات بالنفط، ثم ينتقل إلى تحديات تحليلها وتأمينها، ويستعرض أمثلة على استغلالها والإضرار بها، ويختتم بشرح مفصل لمفهوم «أمن المعلومات» ومبادئه الأربعة (السرية، التكاملية، التوافر، المساءلة). إذن، «أمن المعلومات» هو المِظَلَّة التي تجمع كل فكَر الموضوع.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٢.</p>
+                <p class="question-text">حدِّد – ممَّا يأتي – مضاد الارتجال والعشوائية في سياق الفقرة الأولى. (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> الحزم والشدة.</li>
+                    <li><span class="option-char">ب.</span> الإقدام والمُثابَرة.</li>
+                    <li><span class="option-char">ج.</span> التخطيط والنظام.</li>
+                    <li><span class="option-char">د.</span> الفطنة والذكاء.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ج. التخطيط والنظام»</span>؛ لأن الارتجال هو التصرف وفقًا للموقف دون إعداد أو تخطيط، والعشوائية هي التصرُّف على غير هدي أو بصيرة، ونقيضهما التخطيط والنظام.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٣.</p>
+                <p class="question-text">استنتج المغزى من وصف الكاتب للمعلومات بأنها «نِفطُ القرن الحادي والعشرين» في الفقرة الأولى. (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> تأكيد أنَّ المعلوماتِ ثروةٌ يجب استثمارها وحمايتها.</li>
+                    <li><span class="option-char">ب.</span> تأكيد أنَّ أهمية النفط تراجعت في القرن الحادي والعشرين.</li>
+                    <li><span class="option-char">ج.</span> إظهار أهمية المعلومات في مجال التنقيب.</li>
+                    <li><span class="option-char">د.</span> إظهار تحوُّل العالم عن النفط إلى الطاقة النظيفة.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«أ. تأكيد أنَّ المعلوماتِ ثروةٌ يجب استثمارها وحمايتها»</span>؛ فالنفط يُعَدُّ رمزًا للثروة والقوة والمصدر الإستراتيجي الأهم في القرن العشرين. وعندما يصف الكاتب المعلومات بأنها «نفط القرن الحادي والعشرين»؛ فهو يقصد أنها أصبحت المصدر الأعظم للقيمة والثروة والقوة في عصرنا الحالي، وهو ما يستلزم استغلالها (استثمارها) وتأمينها (حمايتها) تمامًا كما تُحمى الثروات الإستراتيجية.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٤.</p>
+                <p class="question-text">استنتج المعنى الذي قصده الكاتب من قوله: «فمَن يَملِكِ المعلوماتِ الدقيقةَ في الوقت المُناسِب يَملِكِ القوة والسيطرة» في سياق الفقرة الأولى. (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> ضمان الدول لسرية المعلومات وأمنها.</li>
+                    <li><span class="option-char">ب.</span> قيمة المعلومة تكمُن في دِقَّتِها وسرعة الوصول إليها.</li>
+                    <li><span class="option-char">ج.</span> سعي الدول القوية لإخفاء المعلومات والسيطرة عليها.</li>
+                    <li><span class="option-char">د.</span> سرعة نشر المعلومات يحمي من المخاطر.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ب. قيمة المعلومة تكمُن في دِقَّتِها وسرعة الوصول إليها»</span>؛ فالمقولة تُحدِّد شرطين أساسيين لتكون المعلومة مصدرًا للقوة: أن تكون «دقيقة» (الدقة)، وأن تكون متاحة «في الوقت المناسب» (التوقيت والسرعة). وهذان الشرطان هما جوهر قيمة المعلومة.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٥.</p>
+                <p class="question-text">دلِّل من خلال فَهْم الفِقرة الثانية على أنَّ جمع المعلومات ليس هو التحدِّي الأكبر أمام الأشخاص الباحثين عن معرفةٍ ذاتِ قيمة لِيَبْنُوا عليها قراراتٍ صائبةً في حياتهم. (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> يُحتمَل تعرُّض الشخص للسرقة؛ نتيجةَ نَشْرِ بياناته الخاصة على مواقع التسوُّق الإلكتروني.</li>
+                    <li><span class="option-char">ب.</span> يُحتمَل حصول الشخص على معرفة بطرق غير مشروعة؛ لاستخدامها في ابتزاز الآخرين وتهديدهم.</li>
+                    <li><span class="option-char">ج.</span> قد يَبني الشخص خُطَطَه على معرفة مُضلِّلة؛ نتيجةَ جَمْعِ معلوماتٍ زائفة، أو فَقدَت قيمتَها لِقِدَمِها.</li>
+                    <li><span class="option-char">د.</span> قد يَفقِد الشخص حقوق الملكية الفكرية لمعلوماته؛ بسبب تفريطه في توثيقها وتأمينها.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ج. قد يَبني الشخص خُطَطَه على معرفة مُضلِّلة؛ نتيجةَ جَمْعِ معلوماتٍ زائفة، أو فَقدَت قيمتَها لِقِدَمِها»</span>؛ إذ تشير الفقرة الثانية صراحة إلى أنه «لَم يَعُدْ جمعُ المعلومات هو التحدي الأكبر، بل التحدي الحقيقي يَكمُنُ في كيفية تحليلها للتحقُّق من سلامتها ودِقَّتِها... والحيلولة دون نشر بيانات ومعلومات زائفة ومُضلِّلة». وهذا يعني أن جمع معلومات غير دقيقة أو مُضلِّلة لا قيمة له، بل قد يكون ضارًّا، وهو ما يُؤكِّد أن التحدي الحقيقي هو ما بعد الجمع.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٦.</p>
+                <p class="question-text">هاتِ – ممَّا فهِمته من الموضوع – ما يُستدَل به على أن المعلومات سلاح ذو حدَّين. (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> استخدام المعلومات في تطوير مواقع عالمية للتواصل الاجتماعي، وترويج السلع والخدمات إلكترونيًّا.</li>
+                    <li><span class="option-char">ب.</span> إنشاء مُؤسَّسات أمنية وأجهزة استخبارات مُهِمَّتُها جمعُ وتحليل المعلومات والبيانات للحماية.</li>
+                    <li><span class="option-char">ج.</span> جمع معلومات لتحسين التسويق وزيادة الإنتاج، والقرصنة الإلكترونية للإضرار بالشركات المُنافِسة.</li>
+                    <li><span class="option-char">د.</span> التقدم العلمي والتكنولوجي أنتج كَمًّا هائلًا من المعلومات والبيانات، وأحدث انفجارًا معرفيًّا.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ج. جمع معلومات لتحسين التسويق وزيادة الإنتاج، والقرصنة الإلكترونية للإضرار بالشركات المُنافِسة»</span>؛ إذ يُشير مصطلح «سلاح ذو حدين» إلى أن للشيء جانبًا نافعًا وآخر ضارًّا. والفقرة الثالثة تُقدِّم مثالين واضحين: الأول هو الجانب النافع «استخدام الشركات للمعلومات لتحسين التسويق»، والثاني هو الجانب الضار «خسائر الشركات بسبب الهجمات الإلكترونية».</p>
+                </div>
+            </div>
+            
+            <div class="passage-card">
+                <h3><i class="fas fa-user-tie"></i> ممَّا رواه الدكتور أحمد زويل عن مسيرته العلمية:</h3>
+                <p>كنتُ أعمَلُ في ثلاثة أو أربعة موضوعات بحثية في آنٍ واحِد، وساعد على ذلك توافُرُ الإمكانات المُغرِية في المُختَبَرات، بالإضافة إلى شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة، وفي واقع الأمر لقد عشنا في جَوٍّ مِنَ الصداقة والوِئَام بصفة عامة، غيرَ أنني كنت قد شَعَرْتُ في البداية بأن هناك مَن لَم تَكُنْ لهم الثقةُ الكاملة في إمكاناتي وكفاءتي، مع العلم أنني قد عُومِلْتُ معاملةً حسنة مِن المُثقَّفين، وإن اختلف بعضُهم معي في الرأي والرؤية، فلَم يَكُنْ ذلك سببًا لأنْ يُفسِدَ الوُدَّ بيننا؛ فقد كانوا يُقدِّرونني كإنسان، وواحد من شباب الباحثين.</p>
+                <p>وكان هناك أحدُ طُلَّاب الدكتوراة، وكأنَّه مِن المُعادِين للعرب، وقد تَولَّدَ لدي شعورٌ داخليٌّ بأن هذا الشخص لَم يَكُنْ يتوقَّعُ لمِصرِيٍّ مِثلي أن يتفوَّق أبدًا، وكان شديدَ الحِيطَة والحَذَر، ويَتَّسِم بفِكْرٍ مُحافِظٍ مُقاوِمٍ للتغيير، وكان يعتقد اعتقادًا جازمًا في إمكانات التكنولوجيا ودَوْرِها في سير العمليات العسكرية والحروب، واتخذ من هزيمة مصر العسكرية في حرب (يونيو) ١٩٦٧ م مُبرِّرًا لاعتقاده بأن المصريين غير مُؤهَّلين للتعامُل مع الأبحاث العلمية وإجراء التَّجارِب المعملية المتقدِّمة، وكان هذا التحامُل يجرح شعوري؛ ذلك أنه يوحي بالضرورة بأنني في منزلة أدنى من أقراني من الطلاب الأمريكيين والأوروبيين، وأنه ليس بمقدوري أن أَصِلَ إلى مستواهم.</p>
+                <p>ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط، بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة، وكنتُ أقول في نفسي: «سوف ترى في يوم من الأيام ما أنا فاعِلٌ». وقد تحقَّق ذلك بالفعل، وتصادَفَ أننا تقابلنا بعد ذلك في أحد المؤتمرات العلمية وقد تسلَّمت خلاله جائزة «بيتر ديباي» ذاتَ المَقامِ الرفيع، وقد جلس هذا الشخص في الصف الأول أمامي ضمن المشاركين في الاحتفاء بالمصري من جامعة بنسلفانيا.</p>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٧.</p>
+                <p class="question-text">ما الأجواء التي سيطرت على العلاقات بين الزملاء والأساتذة داخل الجامعة من وجهة نظر الكاتب؟ (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> فقدان الثقة.</li>
+                    <li><span class="option-char">ب.</span> الوئام والصداقة.</li>
+                    <li><span class="option-char">ج.</span> المُعادَاة للعرب.</li>
+                    <li><span class="option-char">د.</span> الحيطة والحذر.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ب. الوئام والصداقة»</span>؛ فقد ذكر الكاتب صراحةً في الفقرة الأولى: «… شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة، وفي واقع الأمر لقد عشنا في جَوٍّ مِنَ الصداقة والوِئَام بصفة عامة». هذه العبارة تُؤكِّد أن الجوَّ العام كان يتسم بالصداقة والوئام.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">٨.</p>
+                <p class="question-text">بِمَ وصف الكاتب تعامُل المُثقَّفين في المجتمع الأمريكي معه؟ (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> التقدير على المستويين العِلمي والإنساني.</li>
+                    <li><span class="option-char">ب.</span> النظرة الدونية والتعالي؛ لأنه مصري.</li>
+                    <li><span class="option-char">ج.</span> الاحتفاء بتفوُّقه ومنحه جائزة رفيعة.</li>
+                    <li><span class="option-char">د.</span> المُعادَاة نتيجة الاختلاف في الرأي.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«أ. التقدير على المستويين العِلمي والإنساني»</span>؛ إذ يشير الكاتب إلى ذلك في غير موضع، مثل: «عُومِلْتُ معاملةً حسنة مِن المُثقَّفين»، وأنهم «كانوا يُقدِّرونني كإنسان، وواحد من شباب الباحثين»، حتى مع وجود اختلاف في الرأي. وهذا يدل على تقديرهم له على المستوى الإنساني «كإنسان» والمستوى العلمي «كواحد من شباب الباحثين».</p>
+                </div>
+            </div>
+            <div class="question-card question-mcq">
+                <p class="question-number">٩.</p>
+                <p class="question-text">استنتج علاقة قوله: «بل شَدَّ ذلك مِن أَزْرِي» بما قبله في الفقرة الثالثة. (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> تعليل.</li>
+                    <li><span class="option-char">ب.</span> تفسير.</li>
+                    <li><span class="option-char">ج.</span> تأكيد.</li>
+                    <li><span class="option-char">د.</span> إجمال.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ج. تأكيد»</span>؛ فقد جاءت هذه الجملة بعد نفي الكاتب لأي أثر سلبي عليه بقوله: «ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط». ومن استخدامات «بل» أنها تنفي ما قبلها وتُؤكِّد ما بعدها؛ تنفي ضعف عزيمة الكاتب أو إصابته بالإحباط، وتؤكد صلابته النفسية وقوة عزيمته؛ فالموقف زاد من قوته وإصراره.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">١٠.</p>
+                <p class="question-text">استنتج المغزى من قوله: «سوف ترى في يوم من الأيام ما أنا فاعِل» في سياق الفقرة الثالثة. (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> تأكيد توعُّده برَدِّ الإهانة لمَن قلَّلوا من شأنه.</li>
+                    <li><span class="option-char">ب.</span> إظهار غضبه من عنصرية زميله ضد العرب.</li>
+                    <li><span class="option-char">ج.</span> إظهار الشماتة في الذين شكَّكوا في قدراته.</li>
+                    <li><span class="option-char">د.</span> تأكيد ثقته في نفسه واستنفار طاقته للتفوُّق.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«د. تأكيد ثقته في نفسه واستنفار طاقته للتفوُّق»</span>؛ لأن الكاتب قال هذه الجملة لنفسه بعد أن شعر بالتحامُل ضِدَّه، والذي «أمدَّني بطاقة هائلة». فالمقولة ليست تهديدًا بالانتقام بقدر ما هي دافع داخلي، وتعبير عن ثقته بقدرته على تحويل هذا الموقف السلبي إلى طاقة تدفعه نحو إثبات الذات والتفوق العلمي.</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">١١.</p>
+                <p class="question-text">استدِلَّ من خلال فهم الموضوع على أن الابتكار والتفوق العلمي يتطلَّبان توافُر الإمكانات المناسبة والعَلاقات الطيبة بين الزملاء والرؤساء. (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> تألَّم زويل وجُرِحَت مَشاعره بسبب اعتقاد أحد الدارسين الأمريكيين أن المصريين غير مُؤَهَّلين للبحث العلمي.</li>
+                    <li><span class="option-char">ب.</span> تضاعفت طاقة أحمد زويل على البحث والدراسة لتوافُر المُختَبَرات وأجواء التعاون مع الزملاء والأساتذة.</li>
+                    <li><span class="option-char">ج.</span> أظهر المثقفون في أمريكا تقديرهم لأحمد زويل إنسانًا وباحثًا، ولم تتأثَّر مودتهم باختلافهم معه في الرأي.</li>
+                    <li><span class="option-char">د.</span> حصل زويل على جائزة «بيتر ديباي» في أحد المؤتمرات العلمية ليُثبِت تفوُّق المصريين رغم قلة الإمكانات.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ب. تضاعفت طاقة أحمد زويل على البحث والدراسة لتوافُر المُختَبَرات وأجواء التعاون مع الزملاء والأساتذة»</span>؛ إذ يربط الكاتب في بداية الموضوع بطريقة مباشرة بين قدرته على العمل في عدة موضوعات بحثية في آنٍ واحِد وبين عاملين أساسيين: «توافُرُ الإمكانات المُغرِية في المُختَبَرات» (الإمكانات المناسبة)، و«شيوع رُوح المَوَدَّة والتعاوُن بين الزُّمَلاء والأساتذة» (العلاقات الطيبة).</p>
+                </div>
+            </div>
+
+            <div class="passage-card"> <!-- بطاقة لمقارنة النصوص -->
+                 <p>قال الكاتب:<br>«ولَم يُقلِّل ذلك مِن عزيمتي، ولَم يُصِبْني بالإحباط، بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة، وكنتُ أقول في نفسي: «سوف ترى في يوم من الأيام ما أنا فاعِلٌ». وقد تحقَّق ذلك بالفعل، وتصادَفَ أننا تقابلنا بعد ذلك في أحد المؤتمرات العلمية وقد تسلَّمت خلاله جائزة «بيتر ديباي» ذاتَ المَقامِ الرفيع، وقد جلس هذا الشخص في الصف الأول أمامي ضمن المشاركين في الاحتفاء بالمصري من جامعة بنسلفانيا».</p>
+                 <hr style="margin: 20px 0; border-color: var(--border-light);">
+                 <p>قال طه حسين في كتاب «الأيام»:<br>«وقد استقرَّ إذن في نفس الصبي أنه ما زال – كما كان قبل رحلته إلى القاهرة – قليلَ الخطر ضئيلَ الشأن لا يَستحقُّ عنايةً به ولا سؤالًا عنه؛ فآذى ذلك غُرورَه، وقد كان غُرورُه شديدًا، وزاده ذلك إمعانًا في الصمت وعكوفًا على نفسه وانصرافًا إليها».</p>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">١٢.</p>
+                <p class="question-text">وازِن – من خلال الفقرتين – بين رَدَّة فِعلِ كُلٍّ مِن طه حسين والكاتب تُجاه التقليل من شأنه. (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> كلاهما أدرك أنه قد تعجَّلَ تحقيقَ المكانة بين الناس فقرَّر الابتعاد عنهم.</li>
+                    <li><span class="option-char">ب.</span> طه حسين أدرك أن عليه أن يَعيشَ لنفسه، والكاتب غيَّر طريقة تعامُله مع الناس ليكسب حبهم.</li>
+                    <li><span class="option-char">ج.</span> الكاتب تصادَم مع مَن قلَّل من شأنه، وطه حسين أصرَّ على إثبات ذاته ونيل مكانة في قريته.</li>
+                    <li><span class="option-char">د.</span> كلاهما آذاه التقليل من شأنه؛ فانطوى طه حسين على نفسه، ولكن الكاتِب ازداد إصرارًا على تحقيق ذاته.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«د. كلاهما آذاه التقليل من شأنه؛ فانطوى طه حسين على نفسه، ولكن الكاتِب ازداد إصرارًا على تحقيق ذاته»</span>؛ فكلاهما تأذَّى نفسيًّا من الشعور بالتقليل من شأنه؛ حيث قال زويل: «وكان هذا التحامُل يجرح شعوري»، وقال طه حسين: «فآذى ذلك غُرورَه»، لكن ردة الفعل كانت مختلفة؛ حيث انطوى طه حسين على نفسه وازداد صمتًا وعزلة «زاده ذلك إمعانًا في الصمت وعكوفًا على نفسه». أمَّا أحمد زويل فقد حوَّل هذا الشعور إلى طاقة إيجابية وإصرار على النجاح «بل شَدَّ ذلك مِن أَزْرِي، وأمدَّني بطاقة هائلة».</p>
+                </div>
+            </div>
+
+
+            <div class="poetry-block">
+                <p class="poet-intro">ممَّا قاله أحد شعراء الإحياء والبعث في الحثِّ على مقاومة المُحتلِّ الغاصِب:</p>
+                <div class="verse">
+                    <span class="verse-number">١-</span><span class="hemistich">خَلُّوا التَّوانِي فَفَجْرُ المَجْدِ قد لاحَا</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">واستيقِظوا فزَمَانُ النَّومِ قَد راحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٢-</span><span class="hemistich">واستعمِلوا الحَزْمَ في تحريرِ مَوطِنِكُم</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">واسترخِصُوا في خلاصِ القُطرِ أَرْواحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٣-</span><span class="hemistich">وطَهِّروا الأرضَ مِن باغٍ ومُغتصِبٍ</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">وأَمطِرُوهُم عَذابَ الهُونِ سَحَّاحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٤-</span><span class="hemistich">واستنصِروا اللهَ؛ إنَّ النَّصرَ في يَدِهِ</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">على العَدُوِّ فَمِسْكُ النَّصرِ قَد فاحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٥-</span><span class="hemistich">وأَجمِعُوا الأمرَ في تَوحيدِ مَطْلَبِكُم</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">وأَصلِحُوا ذَاتَ بَينِ القُطرِ إصلاحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٦-</span><span class="hemistich">ومَكِّنُوا عُقدَةَ الإخلاصِ بينَكُمُ</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">وسَطِّرُوا مِنهُ فوقَ الهامِ ألواحَا</span>
+                </div>
+                <div class="verse">
+                    <span class="verse-number">٧-</span><span class="hemistich">وحَكِّمُوا العقلَ قَبلَ الفِعلِ واتَّخِذُوا</span>
+                    <span class="verse-separator">⛬</span>
+                    <span class="hemistich">آراءَ أهلِ النُّهَى والفَضلِ مِصباحَا</span>
+                </div>
+            </div>
+
+             <div class="question-card question-mcq">
+                <p class="question-number">١٣.</p>
+                <p class="question-text">بِمَ طالب الشاعر بني وطنه في البيت الأول؟ (درجتان)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> الحفاظ على الحرية التي يَنعَم بها الوطن.</li>
+                    <li><span class="option-char">ب.</span> الهِمَّة والسعي الجادُّ لتحرير الوطن.</li>
+                    <li><span class="option-char">ج.</span> الحفاظ على الوقت وحُسْن استغلاله.</li>
+                    <li><span class="option-char">د.</span> إظهار الفخر والتغنِّي بأمجاد الوطن.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«ب. الهِمَّة والسعي الجادُّ لتحرير الوطن»</span>؛ إذ يطلب الشاعر من أبناء الوطن أن يتركوا الكسل والتراخي «خَلُّوا التَّوانِي»، وأن ينهضوا ويستعدوا «استيقِظوا»؛ لأن وقت تحقيق المجد؛ مجد تحرير الوطن قد حان «فَجْرُ المَجْدِ قد لاحَا».</p>
+                </div>
+            </div>
+
+            <div class="question-card question-mcq">
+                <p class="question-number">١٤.</p>
+                <p class="question-text">استنتِج المغزى من قول الشاعر في البيت الثاني: «واسترخِصُوا في خلاصِ القُطرِ أَرْواحَا». (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> الحثُّ على بذل النفس في سبيل حرية الوطن.</li>
+                    <li><span class="option-char">ب.</span> الحثُّ على التضحية بالمال والثروة لرقي البلاد.</li>
+                    <li><span class="option-char">ج.</span> الدعوة إلى التحلِّي بكريم الصفات، والترفُّع عن الدنايا.</li>
+                    <li><span class="option-char">د.</span> الدعوة إلى التحلِّي بالصبر في مواجهة المحن والشدائد.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍︎ الإجابة الصحيحة <span class="correct-choice">«أ. الحثُّ على بذل النفس في سبيل حرية الوطن»</span>؛ إذ يُشجِّع الشاعر أبناء الوطن على التضحية بالنفس وعدم الخوف من الموت في سبيل تحرير الوطن، فالتعبير «استرخصوا أرواحًا» يعني أن يَرَوا أرواحهم رخيصة وثمنًا قليلًا يُبذَل مقابل الهدف الأسمى وهو تحرير الوطن.</p>
+                </div>
+            </div>
+             <!-- ... أكمل باقي الأسئلة الموضوعية بنفس النمط ... -->
+            <div class="question-card question-mcq">
+                <p class="question-number">٣٣.</p>
+                <p class="question-text">توقَّع أهم ما يُميِّز المسرحية ويُحقِّق مدلول هذه العبارة: «إنَّ المُمثِّل لا يستطيع النهوض بدوره على خشبة المسرح ما لَم يُقدِّم له المُؤلِّف شخصيةً حيَّةً يستطيع أن يَتقمَّصَها فيُحرِّك الجماهير، ولا يكون بُوقًا للمُؤلِّف…». (درجة واحدة)</p>
+                <ul class="options-list">
+                    <li><span class="option-char">أ.</span> تعتمد على الارتجال بعيدًا عن نصِّ المؤلف.</li>
+                    <li><span class="option-char">ب.</span> تُكتَب لتُؤدَّى أمام الجمهور على خشبة المسرح.</li>
+                    <li><span class="option-char">ج.</span> تُؤدَّى بممثِّل واحد.</li>
+                    <li><span class="option-char">د.</span> تخلو من العاطفة.</li>
+                </ul>
+                <div class="answer-explanation">
+                    <p class="label"><i class="fas fa-check-circle"></i>الإجابة النموذجية والشرح:</p>
+                    <p>✍ الإجابة الصحيحة <span class="correct-choice">«ب. تُكتَب لتُؤدَّى أمام الجمهور على خشبة المسرح»</span>؛ إذ ترتكز المقولة على عناصر أساسية هي: المُمثِّل، خشبة المسرح، والجماهير. وتُوضِّح أن قيمة النص المسرحي لا تكتمل إلا حين يتحوَّل إلى عرض حيٍّ يُؤدِّيه المُمثِّل ليؤثر في الجمهور. وهذا يؤكِّد أن السمة الجوهرية التي تُميِّز فنَّ المسرحية عن الفنون الأدبية الأخرى (كالرواية أو القصة) هي أنها تُكتَب أساسًا ليس لمجرد القراءة، بل لتُجسَّد وتُعرَض في مواجهة الجمهور.</p>
+                </div>
+            </div>
+             <!-- ... أكمل باقي الأسئلة الموضوعية حتى السؤال ٥١ ... -->
+
+        </section>
+
+        <section id="essay-questions">
+            <h2 class="section-title"><i class="fas fa-pen-alt"></i>ثانيًا - الأسئلة المقالية</h2>
+
+            <div class="question-card essay-question">
+                 <div class="passage-card" style="background-color: #f9fafb; border-color: #e5e7eb;"> <!-- إعادة استخدام تنسيق القطعة للسؤال المقالي المعتمد على فقرة -->
+                    <p>«فأمنُ المعلومات يهدف إلى الحماية من انتهاك الخصوصية بالسرقة، أو الاختراق، أو إساءة الاستخدام، أو الإتلاف، أو التزييف والتحريف غير المُصرَّح به. ويقوم أمن المعلومات على أربعة مبادئ أساسية: (١) السرية؛ بحماية المعلومات الحسَّاسة من الوصول غير المُصرَّح به. (٢) التكامُلية؛ بضمان سلامة المعلومات المُخزَّنة والمُتبادَلة والتأكُّد من عدم التلاعُب بها أو تغييرها أو حذفها بطرق غير مشروعة. (٣) التوافر؛ من خلال إتاحة المعلومات للمستخدمين – المُصرَّح لهم بالوصول إليها – عند الحاجة بطريقة آمنة وسريعة. (٤) المُساءَلة؛ بتتبُّع الإجراءات وتحديد المسئولية عند حدوث أيِّ خرق أمني».</p>
+                 </div>
+                <p class="question-number">٥٢.</p>
+                <p class="question-text" style="font-weight: normal;">توقَّع أربعة من المخاطر والمشكلات التي تترتَّب على الإخلال بالمبادئ الأربعة المذكورة في هذه الفقرة. (بواقع توقُّع واحد لكل مبدأ). (درجتان)</p>
+                <div class="essay-answer">
+                    <p class="label">✍ الإجابة المُتوقَّعة:</p>
+                    <p>بناءً على المبادئ الأربعة المذكورة في الفقرة، يُمكِن توقُّع المخاطر والمشكلات الآتية عند الإخلال بكل مبدأ:</p>
+                    <ul>
+                        <li><strong>أ. الإخلال بمبدأ السرية:</strong>
+                            <br>◦ المشكلة أو الخطر المتوقع: تسرُّب المعلومات الحساسة ووقوعها في أيدي غير المُصرَّح لهم؛ وهو ما قد يُؤدِّي إلى استغلالها استغلالًا ضارًّا، مثل: «التجسس، أو سرقة الهُوِيَّة، أو الإضرار بالسمعة، أو فقدان الأفضلية التنافسية للشركات».
+                        </li>
+                        <li><strong>ب. الإخلال بمبدأ التكاملية (سلامة المعلومات):</strong>
+                            <br>◦ المشكلة أو الخطر المتوقع: تغيير البيانات أو تحريفها أو حذفها بطريقة غير مشروعة؛ وهو ما يُؤدِّي إلى اتخاذ قرارات خاطئة بناءً على معلومات مغلوطة، أو فقدان الثقة في الأنظمة، أو حدوث أضرار مالية أو تشغيلية جسيمة.
+                        </li>
+                        <li><strong>ج. الإخلال بمبدأ التوافُر (إتاحة المعلومات):</strong>
+                            <br>◦ المشكلة أو الخطر المتوقع: عدم قدرة المستخدمين، المُصرَّح لهم، على الوصول إلى المعلومات والخِدْمات عند الحاجة إليها؛ وهو ما يُعطِّل الأعمال والعمليات الحيوية، ويؤدي إلى خسائر مالية، وتوقُّف الخدمات الأساسية، وعدم القدرة على الاستجابة للأزمات.
+                        </li>
+                        <li><strong>د. الإخلال بمبدأ المُساءَلة:</strong>
+                            <br>◦ المشكلة أو الخطر المتوقع: صعوبة أو استحالة تحديد المسئول عن أي خرقٍ أمني أو إساءة استخدام للمعلومات؛ وهو ما يُشجِّع على تَكرار الانتهاكات، ويجعل من الصعب معالجتها أو منعها مستقبلًا، ويؤدي إلى إفلات المُتسبِّبين فيها من العقاب.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+             <div class="question-card essay-question">
+                 <div class="passage-card" style="background-color: #f9fafb; border-color: #e5e7eb;">
+                    <p>قال طه حسين في كتاب «الأيام»:<br>«وقد أَرِقَ الصبي ليلته كلَّها، ولكنه كان أَرِقًا فَرِحًا مُبتهِجًا، فيه كثيرٌ مِن تَعَجُّلِ الوقت واستبطاءِ الصبح. وقد ذهب الصبي إلى درس الحديث فسمِع صوت الشيخ وهو يَتغنَّى بالسند والمتن، ولكنه لم يُلْقِ إلى الشيخ بالًا، ولم يفهم عنه شيئًا. وذهب بعد ذلك إلى درس الفقه فاستمع له؛ لأنه لم يجد عن ذلك بُدًّا، فقد كان أخوه أوصى به الشيخ، وكان الشيخ يُحاوره ويُناظره ويضطره إلى أن يسمع له ويفهم عنه، ثم عاد الصبيُّ إلى الغرفة في الضُّحى فأنفق وقته هادئًا قلِقًا».</p>
+                 </div>
+                <p class="question-number">٥٣.</p>
+                <p class="question-text" style="font-weight: normal;">هاتِ أربعة أدلة مِنَ الفِقرة على شعور الصبي باللهفة والترقُّب. (درجتان)</p>
+                 <div class="essay-answer">
+                    <p class="label">✍ الإجابة المُتوقَّعة:</p>
+                    <p>الأدلة الأربعة من الفقرة على شعور الصبي باللهفة والترقُّب هي:</p>
+                    <ul>
+                        <li><strong>أ.</strong> «وقد أَرِقَ الصبي ليلته كلَّها، ولكنه كان أَرِقًا فَرِحًا مُبتهِجًا»؛ فالأرق المصحوب بالفرح والابتهاج يدلُّ على ترقُّب شيء سار يجعله غير قادر على النوم بسبب شدة لهفته.</li>
+                        <li><strong>ب.</strong> «فيه كثيرٌ مِن تَعَجُّلِ الوقت واستبطاءِ الصبح»؛ فرغبته في أن يَمُرَّ الوقت سريعًا دليل على لهفته لما هو قادم، وشعورُه بأن الصباح بطيء في القدوم يعكس شدة انتظاره وترقبه.</li>
+                        <li><strong>ج.</strong> «ولكنه لم يُلْقِ إلى الشيخ بالًا، ولم يَفهم عنه شيئًا»؛ فعدم تركيزه في درس الحديث وانشغال ذهنه دليل على أن تفكيره مُنصَبٌّ على ما ينتظره بلهفة.</li>
+                        <li><strong>د.</strong> «فأنفق وقته هادِئًا قلِقًا»؛ فكلمة «قلقًا» هنا تشير إلى القلق المصحوب بالترقُّب والانتظار، وليس القلق الناجم عن الخوف.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card essay-question">
+                <p class="question-number">٥٤.</p>
+                <p class="question-text" style="font-weight: normal;">«يكافئ المعلم الطلاب المتفوقين ذوي الدرجات النهائية». ابْنِ الفعل المضارع في هذه المقولة للمجهول وغير ما يلزم. (درجتان)</p>
+                 <div class="essay-answer">
+                    <p class="label">✍ الإجابة الصحيحة:</p>
+                    <p style="text-indent: 0; text-align:right; font-weight:bold; color:var(--correct-answer-text);">يُكافَأُ الطلابُ المُتفوِّقون ذوو الدرجات النهائية.</p>
+                </div>
+            </div>
+
+
+            <div class="question-card essay-question">
+                 <p class="question-number">٥٥.</p>
+                <p class="question-text" style="font-weight: normal;">اكتب كلمةً ختامية لندوة تهدُف إلى مناقشة مستقبل الذكاء الاصطناعي، وأهمية التدريب على استخداماته في مناحي الحياة، بعنوان: «مستقبل الذكاء الاصطناعي: طموحات وتحديات». على أن يُراعى في الكلمة ما يلي:
+                    <br>• تكون في حدود (٦ - ٨) أسطر، (٨٠) كلمة.
+                    <br>• تتضمَّن مُلخَّص ما عُرِضَ في الندوة.
+                    <br>• عرض أهم التوصيات في مجال توظيف الذكاء الاصطناعي في مختلِف جوانب الحياة.
+                    <br>• تقديم الشكر للمُتحدِّثين الرئيسيين وللحضور.
+                    <br>• الإعلان الختامي الرسمي للندوة.
+                </p>
+                 <div class="essay-answer">
+                    <p class="label">✍ الإجابة المُتوقَّعة:</p>
+                    <p>أيها الحضورُ الكريم،</p>
+                    <p>إلى هنا نصل إلى محطتنا الختاميةِ في رحابِ ندوتنا الماتعة، «مستقبل الذكاء الاصطناعي: طموحات وتحديات»، التي أضاءَت لنا دروبَ المستقبل، وكشفَت عن آفاقٍ واعِدة لهذه التقنية الصاعدة، وعن أبرز التحديات المصاحبة لها.</p>
+                    <p>وإنَّ أبرزَ ما نوصي به هو الاستثمارُ في الإنسانِ نفسِه؛ عبرَ برامج تدريب مُتخصِّصة مُكثَّفة، مع وضعِ أُطرٍ أخلاقية وتنظيمية راسخة، تضمن توظيفَ هذه التقنية بوعي ومسئولية لخدمة البشرية في مختلِف القطاعات، ولا سيما التعليم والصحة والصناعة؛ لضمان مستقبلٍ رَقْميٍّ آمِن ومزدهر.</p>
+                    <p>وفي الختام، نتقدَّم بأسمى آياتِ الشكرِ والعرفانِ للمتحدِّثين الأفاضلِ على ما قدَّموه من رُؤًى قَيِّمة، ولكم أيها الحضورُ الكريم على تفاعلكم البنَّاء.</p>
+                    <p>وبهذا، نعلنُ رسميًّا اختتامَ أعمالِ ندوتنا، على أمل اللقاء بكم في فعاليات قادمة تخدُم مستقبل أوطاننا.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="exam-footer">
+            <p>كتبه وراجعه وصمَّمه: <strong>رضا جبريل</strong></p>
+            <p>© جميع الحقوق محفوظة ٢٠٢٥</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- بداية كود الحماية من النسخ ---
+        function isEditable(element) {
+            return false; 
+        }
+
+        document.addEventListener('contextmenu', function(e) {
+            if (isEditable(e.target)) return;
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (isEditable(e.target)) {
+                if (e.ctrlKey && (e.key === 'a' || e.key === 'c' || e.key === 'x' || e.key === 'v' || e.key === 'A' || e.key === 'C' || e.key === 'X' || e.key === 'V')) {
+                    return;
+                }
+            }
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'a' || e.key === 'C' || e.key === 'X' || e.key === 'A')) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (['I', 'J', 'C'].includes(e.key.toUpperCase())))) {
+                e.preventDefault();
+            }
+        });
+
+        ['copy', 'cut', 'dragstart', 'selectstart'].forEach(event => {
+            document.addEventListener(event, function(e) {
+                if (isEditable(e.target)) return;
+                e.preventDefault();
+            });
+        });
+        // --- نهاية كود الحماية من النسخ ---
+    </script>
+</body>
+</html>
